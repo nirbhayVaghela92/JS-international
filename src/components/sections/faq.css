@@ -1,0 +1,11 @@
+.cus-accordion button svg {
+    display: none;
+}
+
+.cus-accordion button {
+    border-radius: 0;
+}
+
+.cus-accordion button span svg {
+    display: block;
+}
