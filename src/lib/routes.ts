@@ -7,6 +7,7 @@ export const routes= {
     womenWatches:"/women-watches",
     purses:"/purses",
     jewellery:"/jewellery",
+    wishList:"/wish-list",
     // featuredCollections:"/featured-collections",
     // sale:"/sale"
 }

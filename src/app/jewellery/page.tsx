@@ -1,11 +1,7 @@
+import CategoryPage from "@/components/pages/CategoryPage";
 
+const Jewellery = () => {
+  return <CategoryPage catgeory="jewellery" />;
+};
 
-import React from 'react'
-
-function page() {
-  return (
-    <div>Jewellery</div>
-  )
-}
-
-export default page
+export default Jewellery;

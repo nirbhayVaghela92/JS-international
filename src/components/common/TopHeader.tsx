@@ -7,7 +7,7 @@ import { FaXTwitter } from "react-icons/fa6";
 import { PiYoutubeLogo } from "react-icons/pi";
 import { TbBrandLinkedin } from "react-icons/tb";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import { useState } from "react";
 import Link from "next/link";
@@ -19,15 +19,17 @@ import { PiHeart } from "react-icons/pi";
 import "./header.css";
 import CartSidebar from "../cart/CartSidebar";
 import { routes } from "@/lib/routes";
+import { SearchBar } from "./SearchBar";
 
 export default function TopHeader() {
+  const pathName = usePathname();
   const [open, setOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
   const router = useRouter();
 
   return (
     <div className="w-full text-white fixed top-0 z-10">
-      <div className="bg-[#0f4a45] py-[11px]">
+      <div className="bg-[#0f4a45] py-2.75">
         <div className="cus-container">
           <div className="flex flex-col gap-2 md:flex-row md:gap-0 items-center justify-between text-sm">
             <p className="text-center font-normal text-[14px] md:text-[16px]">
@@ -54,18 +56,6 @@ export default function TopHeader() {
           </div>
         </div>
       </div>
-      {/* <div className="cus-container bg-white">
-            <div className="flex">
-                <div className="">
-                    <Image
-                        src="/images/common/logo.png"
-                        alt="Logo"
-                        width={340}
-                        height={69}
-                    />
-                </div>
-            </div>
-        </div> */}
       <header className="mt-7">
         <div className="cus-container">
           <div className="flex items-center justify-between bg-white">
@@ -85,9 +75,12 @@ export default function TopHeader() {
             <div className="flex lg:gap-7.5 xl:gap-20.5">
               {/* 🔹 Desktop Menu */}
               <nav className="hidden lg:flex items-center gap-6 xl:gap-8 font-medium">
-                <a className="text-[#1B1918] hover:text-[#0f4a45]" href="#new-arrivals">
+                <Link
+                  className="text-[#1B1918] hover:text-[#0f4a45]"
+                  href="/#new-arrivals"
+                >
                   New Arrivals
-                </a>
+                </Link>
 
                 {/* Dropdown */}
                 <div className="group relative cursor-pointer">
@@ -96,28 +89,34 @@ export default function TopHeader() {
                   </div>
 
                   <div className="absolute left-0 top-full hidden w-48 bg-white shadow-lg group-hover:block">
-                    <a
+                    <Link
                       className="block px-4 py-3 text-[#1B1918] hover:bg-gray-100"
                       href={routes.menWatches}
                     >
                       Men&apos;s Watches
-                    </a>
-                    <a
+                    </Link>
+                    <Link
                       className="block px-4 py-3 text-[#1B1918] hover:bg-gray-100"
-                      onClick={() => router.push("/product")}
+                      href={routes.womenWatches}
                     >
                       Women&apos;s Watches
-                    </a>
+                    </Link>
                   </div>
                 </div>
 
-                <Link href="#" className="text-[#1B1918] hover:text-[#0f4a45]">
+                <Link
+                  href={routes.purses}
+                  className="text-[#1B1918] hover:text-[#0f4a45]"
+                >
                   Purses
                 </Link>
-                <Link href="#" className="text-[#1B1918] hover:text-[#0f4a45]">
+                <Link
+                  href={routes.jewellery}
+                  className="text-[#1B1918] hover:text-[#0f4a45]"
+                >
                   Jewellery
                 </Link>
-                <Link
+                {/* <Link
                   href="#"
                   className="text-[#1B1918] hover:text-[#0f4a45] proved"
                 >
@@ -125,29 +124,41 @@ export default function TopHeader() {
                 </Link>
                 <Link href="#" className="text-[#1B1918] hover:text-[#0f4a45]">
                   Sale
-                </Link>
+                </Link> */}
               </nav>
 
               {/* 🔹 Icons */}
-              <div className="flex items-center gap-3 md:gap-5 bg-[#f7ecd6] px-3 md:px-6 py-7 md:py-11">
-                <FiSearch className="text-xl cursor-pointer text-[#1B1918] hover:text-[#0f4a45]" />
-                <button onClick={() => setCartOpen(true)}>
-                  <LiaShoppingCartSolid className="text-xl cursor-pointer text-[#1B1918] hover:text-[#0f4a45]" />
-                </button>
-                <PiHeart className="text-xl cursor-pointer text-[#1B1918] hover:text-[#0f4a45]" />
-                <FiUser
-                  className="text-xl cursor-pointer text-[#1B1918] hover:text-[#0f4a45]"
-                  onClick={() => router.push("/login")}
-                />
+            <div className="flex items-center gap-3 md:gap-5 bg-[#f7ecd6] px-3 md:px-6 py-7 md:py-11">
 
-                {/* Mobile Menu Button */}
-                <button
-                  className="lg:hidden text-2xl"
-                  onClick={() => setOpen(!open)}
-                >
-                  {open ? <FiX /> : <FiMenu />}
-                </button>
-              </div>
+  {/* Search icon slot (same size as other icons) */}
+  <div className="relative shrink-0">
+    <SearchBar />
+  </div>
+
+  {/* Other icons */}
+  <LiaShoppingCartSolid
+    className="text-xl cursor-pointer text-[#1B1918] hover:text-[#0f4a45]"
+    onClick={() => setCartOpen(true)}
+  />
+
+  <PiHeart
+    className="text-xl cursor-pointer text-[#1B1918] hover:text-[#0f4a45]"
+    onClick={() => router.push(routes.wishList)}
+  />
+
+  <FiUser
+    className="text-xl cursor-pointer text-[#1B1918] hover:text-[#0f4a45]"
+    onClick={() => router.push(routes.signIn)}
+  />
+
+  <button
+    className="lg:hidden text-2xl shrink-0"
+    onClick={() => setOpen(!open)}
+  >
+    {open ? <FiX /> : <FiMenu />}
+  </button>
+</div>
+
             </div>
           </div>
 
@@ -157,24 +168,24 @@ export default function TopHeader() {
           {open && (
             <div className="lg:hidden border-t border-gray-200 bg-white">
               <nav className="flex flex-col gap-4 py-4 pl-4 font-medium">
-                <a className="text-[#1B1918] hover:text-[#0f4a45] cursor-pointer!" href="#new-arrivals">
+                <a
+                  className="text-[#1B1918] hover:text-[#0f4a45] cursor-pointer!"
+                  href="#new-arrivals"
+                >
                   New Arrivals
                 </a>
-                <a onClick={() => router.push("/product")} className="text-[#1B1918] hover:text-[#0f4a45]">
+                <a
+                  onClick={() => router.push("/product")}
+                  className="text-[#1B1918] hover:text-[#0f4a45]"
+                >
                   Watches
                 </a>
-                <a className="text-[#1B1918] hover:text-[#0f4a45]">
-                  Purses
-                </a>
-                <a className="text-[#1B1918] hover:text-[#0f4a45]">
-                  Jewellery
-                </a>
+                <a className="text-[#1B1918] hover:text-[#0f4a45]">Purses</a>
+                <a className="text-[#1B1918] hover:text-[#0f4a45]">Jewellery</a>
                 <a className="text-[#1B1918] hover:text-[#0f4a45]">
                   Featured Collections
                 </a>
-                <a className="text-[#1B1918] hover:text-[#0f4a45]">
-                  Sale
-                </a>
+                <a className="text-[#1B1918] hover:text-[#0f4a45]">Sale</a>
               </nav>
             </div>
           )}

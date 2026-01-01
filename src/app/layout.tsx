@@ -3,6 +3,7 @@ import "./globals.css";
 import TopHeader from "@/components/common/TopHeader";
 import Footer from "@/components/common/Footer";
 import LayoutWrapper from "@/components/layout/layoutWrapper";
+import BlogSection from "@/components/sections/BlogSection";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,6 +40,7 @@ export default function RootLayout({ children }) {
       <body className={`${inter.variable} ${playfair.variable}`}>
         <TopHeader />
         <LayoutWrapper>{children}</LayoutWrapper>
+        {/* <BlogSection /> */}
         <Footer />
       </body>
     </html>

@@ -1,11 +1,7 @@
+import CategoryPage from "@/components/pages/CategoryPage";
 
+const Purses = () => {
+  return <CategoryPage catgeory="purses"/>;
+};
 
-import React from 'react'
-
-function page() {
-  return (
-    <div>Purse</div>
-  )
-}
-
-export default page
+export default Purses;

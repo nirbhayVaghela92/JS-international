@@ -119,15 +119,16 @@ export default function LoginPage() {
                   </a>
                 </p>
 
+                {/* Login with OTP - Disabled for now */}
                 {/* Divider */}
-                <div className="flex items-center gap-4">
+                {/* <div className="flex items-center gap-4">
                   <span className="h-px flex-1 bg-[#E5E5E5]" />
                   <span className="text-sm text-[#6B6B6B]">OR</span>
                   <span className="h-px flex-1 bg-[#E5E5E5]" />
-                </div>
+                </div> */}
 
                 {/* Phone */}
-                <div>
+                {/* <div>
                   <label className="mb-2 block text-sm font-medium text-[#1B1918]">
                     Phone Number<span className="text-red-500">*</span>
                   </label>
@@ -151,10 +152,10 @@ export default function LoginPage() {
                       Send OTP
                     </button>
                   </div>
-                </div>
+                </div> */}
 
                 {/* OTP Login Button */}
-                <Button
+                {/* <Button
                   bgColor="bg-[#094745]"
                   textColor="text-white"
                   px="px-8"
@@ -163,7 +164,7 @@ export default function LoginPage() {
                   className="w-full rounded-none"
                 >
                   LOGIN VIA OTP
-                </Button>
+                </Button> */}
               </form>
             </div>
           </div>

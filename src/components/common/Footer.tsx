@@ -16,10 +16,8 @@ export default function Footer() {
     <footer className="bg-[#094745] text-white">
 
       {/* 🔹 Newsletter */}
-      <div className="border-b border-white/20 bg-[#053836]">
+      {/* <div className="border-b border-white/20 bg-[#053836]">
         <div className="cus-container flex flex-col gap-6 py-16 md:flex-row md:items-center md:justify-between">
-          
-          {/* Left */}
           <div>
             <h2 className="font-serif text-4xl font-semibold">
               Sign Up
@@ -28,8 +26,6 @@ export default function Footer() {
               For our newsletter and get 10% off on your next purchase!
             </p>
           </div>
-
-          {/* Right */}
           <div className="flex w-full max-w-xl flex-col gap-4 sm:flex-row">
             <input
               type="email"
@@ -49,7 +45,7 @@ export default function Footer() {
             </Button>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* 🔹 Footer Links */}
       <div className="cus-container py-20">
