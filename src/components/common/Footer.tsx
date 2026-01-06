@@ -10,11 +10,11 @@ import {
 import { FaInstagram, FaXTwitter } from "react-icons/fa6"
 import { TbBrandFacebook, TbBrandLinkedin } from "react-icons/tb"
 import { PiYoutubeLogo } from "react-icons/pi"
+import { routes } from "@/lib/routes"
 
 export default function Footer() {
   return (
     <footer className="bg-[#094745] text-white">
-
       {/* 🔹 Newsletter */}
       {/* <div className="border-b border-white/20 bg-[#053836]">
         <div className="cus-container flex flex-col gap-6 py-16 md:flex-row md:items-center md:justify-between">
@@ -56,9 +56,9 @@ export default function Footer() {
             <h4 className="mb-6 text-xl font-semibold">Company</h4>
             <ul className="space-y-4 text-[#cfdad8]">
               <li><Link href="#">About Us</Link></li>
-              <li><Link href="#">FAQs</Link></li>
-              <li><Link href="#">Blogs</Link></li>
-              <li><Link href="#">Our Story</Link></li>
+              <li><Link href="#faq">FAQs</Link></li>
+              {/* <li><Link href="#">Blogs</Link></li> */}
+              {/* <li><Link href="#">Our Story</Link></li> */}
             </ul>
           </div>
 
@@ -66,7 +66,7 @@ export default function Footer() {
           <div>
             <h4 className="mb-6 text-xl font-semibold">Support</h4>
             <ul className="space-y-4 text-[#cfdad8]">
-              <li><Link href="#">Contact</Link></li>
+              <li><Link href={routes.contactSupport}>Contact</Link></li>
               <li><Link href="#">Shipping & Returns</Link></li>
               <li><Link href="#">Terms & Conditions</Link></li>
               <li><Link href="#">Privacy Policy</Link></li>
@@ -77,10 +77,10 @@ export default function Footer() {
           <div>
             <h4 className="mb-6 text-xl font-semibold">Category</h4>
             <ul className="space-y-4 text-[#cfdad8]">
-              <li><Link href="#">Watch For Men</Link></li>
-              <li><Link href="#">Watch For Women</Link></li>
-              <li><Link href="#">Purses</Link></li>
-              <li><Link href="#">Jewellery</Link></li>
+              <li><Link href={routes.menWatches}>Watch For Men</Link></li>
+              <li><Link href={routes.menWatches}>Watch For Women</Link></li>
+              <li><Link href={routes.purses}>Purses</Link></li>
+              <li><Link href={routes.jewellery}>Jewellery</Link></li>
             </ul>
           </div>
 

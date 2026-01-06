@@ -10,7 +10,7 @@ import PasswordField from "@/components/common/PasswordField";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { editProfileSchema, editProfileSchemaType } from "@/types/schemas";
-import { useUpdateProfile } from "@/hooks/queries/useAuth";
+import { useUpdateProfile } from "@/hooks/queries";
 import { useGetAuthDetails } from "@/hooks/useGetAuthDetails";
 
 export default function EditProfilePage() {
@@ -98,7 +98,7 @@ export default function EditProfilePage() {
                 <InputField
                   label="Phone Number"
                   required
-                  pattern="[0-9+\-\s()]{7,}"
+                  // pattern="[0-9+\-\s()]{7,}"
                   type="phoneNumber"
                   icon={<HiOutlinePhone />}
                   placeholder="Enter your phone number"

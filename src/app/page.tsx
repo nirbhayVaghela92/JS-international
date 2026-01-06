@@ -286,7 +286,7 @@ export default function HomePage() {
     });
   };
   return (
-    <main >
+    <main>
       {/* Banner Start Here */}
       <div className="relative w-full overflow-hidden">
         <Carousel
@@ -669,8 +669,9 @@ export default function HomePage() {
       </section>
 
       {/* Faq Section Start Here */}
-
-      <FaqSection />
+      <section id="faq">
+        <FaqSection />
+      </section>
     </main>
   );
 }

@@ -10,7 +10,7 @@ import PasswordField from "@/components/common/PasswordField";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registerSchema, registerSchemaType } from "@/types/schemas";
-import { useRegister, useSignIn } from "@/hooks/queries/useAuth";
+import { useRegister } from "@/hooks/queries";
 import { routes } from "@/lib/routes";
 
 export default function AccountPage() {

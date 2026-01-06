@@ -14,7 +14,7 @@ import PasswordField from "@/components/common/PasswordField";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { signInSchema, SignInSchemaType } from "@/types/schemas";
-import { useSignIn } from "@/hooks/queries/useAuth";
+import { useSignIn } from "@/hooks/queries";
 import InputField from "@/components/common/InputField";
 import { routes } from "@/lib/routes";
 

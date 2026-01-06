@@ -21,6 +21,7 @@ export const routes = {
   womenWatches: "/women-watches",
   purses: "/purses",
   jewellery: "/jewellery",
+  contactSupport: "/contact-support",
   // featuredCollections:"/featured-collections",
   // sale:"/sale"
 };
@@ -34,6 +35,7 @@ export const publicRoutes: string[] = [
   routes.womenWatches,
   routes.purses,
   routes.jewellery,
+  routes.contactSupport
 ];
 
 export const protectedRoutes: string[] = [routes.editUserDetails , routes.wishList];

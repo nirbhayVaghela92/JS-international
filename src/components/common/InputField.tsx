@@ -22,35 +22,32 @@ function InputField({
   ...inputProps
 }: InputFieldProps) {
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (type === "phoneNumber") {
-      const char = e.key;
+    if (type !== "phoneNumber") return;
 
-      // Allow control keys (backspace, delete, tab, escape, enter, etc.)
-      if (
-        e.key === "Backspace" ||
-        e.key === "Delete" ||
-        e.key === "Tab" ||
-        e.key === "Escape" ||
-        e.key === "Enter" ||
-        e.key === "ArrowLeft" ||
-        e.key === "ArrowRight" ||
-        e.key === "ArrowUp" ||
-        e.key === "ArrowDown" ||
-        e.ctrlKey ||
-        e.metaKey
-        // (e.key === "a" && e.ctrlKey) || // Allow Ctrl+A
-        // (e.key === "c" && e.ctrlKey) || // Allow Ctrl+C
-        // (e.key === "v" && e.ctrlKey) || // Allow Ctrl+V
-        // (e.key === "x" && e.ctrlKey) // Allow Ctrl+X
-      ) {
-        return;
-      }
+    const char = e.key;
 
-      // Allow only numeric characters (0-9)
-      const numericPattern = /^[0-9]$/;
-      if (!numericPattern.test(char)) {
-        e.preventDefault();
-      }
+    // Allow control & navigation keys
+    if (
+      char === "Backspace" ||
+      char === "Delete" ||
+      char === "Tab" ||
+      char === "Escape" ||
+      char === "Enter" ||
+      char === "ArrowLeft" ||
+      char === "ArrowRight" ||
+      char === "ArrowUp" ||
+      char === "ArrowDown" ||
+      e.ctrlKey ||
+      e.metaKey
+    ) {
+      return;
+    }
+
+    // Allow: +, digits, space, -, (, )
+    const phoneKeyPattern = /^[+\d\s()-]$/;
+
+    if (!phoneKeyPattern.test(char)) {
+      e.preventDefault();
     }
   };
 

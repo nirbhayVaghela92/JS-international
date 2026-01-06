@@ -59,7 +59,6 @@ export default function FaqSection() {
   return (
     <section className="py-24">
       <div className="cus-container cus-accordion">
-
         <SectionHeading
           title="Frequently Asked Questions"
           subtitle="Quick answers to help you shop with confidence."
