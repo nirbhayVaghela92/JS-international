@@ -313,7 +313,7 @@ export default function HomePage() {
                       <Button
                         textColor="text-[#0f4a45]"
                         bgColor="bg-[#E7B250]"
-                        className="uppercase mt-5 px-7.5"
+                        className="uppercase mt-5 px-7.5 cursor-pointer"
                         onClick={() => router.push("/#new-arrivals")}
                       >
                         Discover New Arrivals
@@ -556,7 +556,7 @@ export default function HomePage() {
                 className="mx-auto"
               />
               <h4 className="text-[32px] mb-3.75">Watches</h4>
-              <Button className="w-full mx-auto max-w-91.25">Discover</Button>
+              <Button className="w-full mx-auto max-w-91.25 cursor-pointer" onClick={() => router.push(routes.watches)}>Discover</Button>
             </div>
             <div className="text-center bg-[#F6EDDB] pb-6.75">
               <Image
@@ -567,7 +567,7 @@ export default function HomePage() {
                 className="mx-auto"
               />
               <h4 className="text-[32px] mb-3.75">Purses</h4>
-              <Button className="w-full mx-auto max-w-91.25">Discover</Button>
+              <Button className="w-full mx-auto max-w-91.25 cursor-pointer" onClick={() => router.push(routes.purses)}>Discover</Button>
             </div>
             <div className="text-center bg-[#F6EDDB] pb-6.75">
               <Image
@@ -578,7 +578,7 @@ export default function HomePage() {
                 className="mx-auto"
               />
               <h4 className="text-[32px] mb-3.75">Jewellery</h4>
-              <Button className="w-full mx-auto max-w-91.25">Discover</Button>
+              <Button className="w-full mx-auto max-w-91.25 cursor-pointer" onClick={() => router.push(routes.jewellery)}>Discover</Button>
             </div>
           </div>
         </div>

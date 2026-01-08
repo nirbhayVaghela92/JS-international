@@ -11,5 +11,7 @@ export const getSectionLabel = (category: ProductSections) => {
         return "Jewellery";
     } else if(category === "WishList"){
         return "Wish List";
+    } else if(category === "watches"){
+        return "Watches";
     }
 }

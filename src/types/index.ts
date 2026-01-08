@@ -1,7 +1,7 @@
 
 export type Categories = "menWatches" | "womenWatches" | "purses" | "jewellery";
 
-export type ProductSections = Categories | "WishList";
+export type ProductSections = Categories | "WishList" | "watches" ;
 export interface Product {
     id: number;
     productId?: string;

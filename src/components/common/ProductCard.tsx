@@ -30,7 +30,7 @@ export default function ProductCard({ product }) {
           alt={product.title}
           width={375}
           height={375}
-          className="mx-auto h-[375px] w-full object-contain"
+          className="mx-auto h-93.75 w-full object-contain"
         />
       </div>
 

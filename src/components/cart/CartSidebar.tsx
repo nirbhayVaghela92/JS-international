@@ -53,7 +53,7 @@ export default function CartSidebar({ isOpen, onClose }) {
 
           <button onClick={onClose} className="text-red-500 text-xl">
             <Image
-            className="w-10.5 h-10.5"
+            className="w-10.5 h-10.5 cursor-pointer"
               src="/images/icons/close.png"
               alt="Shield image"
               width={54}
