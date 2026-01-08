@@ -21,42 +21,62 @@ export const useCartStore = create<CartStore>()(
     (set, get) => ({
       items: [],
 
+      /* ADD TO CART (quantity = NEW ADDITION) */
       addToCart: (product) => {
-        const existingItem = get().items.find((item) => item.id === product.id);
+        const existingItem = get().items.find(
+          (item) => item.id === product.id
+        );
 
         if (existingItem) {
+          const newQty =
+            existingItem.cartQuantity + product.quantity;
+
+          if (newQty > product.stocks) return;
+
           set({
             items: get().items.map((item) =>
               item.id === product.id
-                ? { ...item, cartQuantity: item.cartQuantity + 1 }
+                ? { ...item, cartQuantity: newQty }
                 : item
             ),
           });
         } else {
+          if (product.quantity > product.stocks) return;
+
           set({
-            items: [...get().items, { ...product, cartQuantity: 1 }],
+            items: [
+              ...get().items,
+              { ...product, cartQuantity: product.quantity },
+            ],
           });
         }
       },
 
+      /* REMOVE ITEM COMPLETELY */
       removeFromCart: (productId) =>
         set({
-          items: get().items.filter((item) => item.id !== productId),
+          items: get().items.filter(
+            (item) => item.id !== productId
+          ),
         }),
 
+      /* +1 */
       increaseQty: (productId) =>
         set({
           items: get().items.map((item) =>
-            item.id === productId
+            item.id === productId &&
+            item.cartQuantity < item.stocks
               ? { ...item, cartQuantity: item.cartQuantity + 1 }
               : item
           ),
         }),
 
+      /* -1 */
       decreaseQty: (productId) =>
         set({
           items: get()
-            .items.map((item) =>
+            .items
+            .map((item) =>
               item.id === productId
                 ? { ...item, cartQuantity: item.cartQuantity - 1 }
                 : item

@@ -1,7 +1,7 @@
 "use client";
 
 import ProductDetails from "@/components/products/productDetails";
-import { Link } from "lucide-react";
+
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import SectionHeading from "@/components/common/SectionHeading";
@@ -17,8 +17,6 @@ import FaqSection from "@/components/sections/FaqSection";
 import { HiOutlineCalendar } from "react-icons/hi";
 import Button from "@/components/common/Button";
 import { routes } from "@/lib/routes";
-import { ProductSections } from "@/types";
-import { getSectionLabel } from "@/helpers/categoryHelper";
 
 const products2 = [
   {
@@ -95,19 +93,15 @@ const blogs = [
   },
 ];
 
-interface ProductDetailPageProps {
-  category: ProductSections;
-}
 
-export default function ProductDetailPage({
-  category,
-}: ProductDetailPageProps) {
+
+export default function ProductDetail() {
   const router = useRouter();
   const [api, setApi] = useState(null);
   const [canPrev, setCanPrev] = useState(false);
   const [canNext, setCanNext] = useState(true);
 
-  const categoryLabel = getSectionLabel(category);
+  // const categoryLabel = getSectionLabel(category);
 
   const onInit = (embla) => {
     setApi(embla);
@@ -119,6 +113,7 @@ export default function ProductDetailPage({
       setCanNext(embla.canScrollNext());
     });
   };
+  
   return (
     <main className="pt-11.5">
       <section className="relative">
@@ -131,7 +126,7 @@ export default function ProductDetailPage({
         />
         <div className="text-center absolute top-1/2 left-1/2 bottom-20 -translate-x-1/2">
           <h2 className="text-[40px] text-[#E7B250] font-bold">
-            {categoryLabel?.toUpperCase()}
+            PRODUCT DETAILS
           </h2>
           <nav className="text-sm text-[#9B9B9B]">
             {/* <Link href="/" className="hover:text-[#094745] ">
@@ -141,7 +136,7 @@ export default function ProductDetailPage({
               className="font-medium text-white cursor-pointer"
               onClick={() => router.push(routes.home)}
             >
-              Home / {categoryLabel}
+              Home / Product Details
             </a>
             <span className="mx-2">/</span>
 

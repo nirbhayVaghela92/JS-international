@@ -28,6 +28,7 @@ export const routes = {
 
 export const publicRoutes: string[] = [
   "/",
+  "/products",
   routes.signIn,
   routes.register,
   routes.product,
