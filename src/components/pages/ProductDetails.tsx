@@ -17,57 +17,7 @@ import FaqSection from "@/components/sections/FaqSection";
 import { HiOutlineCalendar } from "react-icons/hi";
 import Button from "@/components/common/Button";
 import { routes } from "@/lib/routes";
-
-const products2 = [
-  {
-    id: 1,
-    image: "/images/products2/p1.png",
-    title: "Belisenna Watch Double Leather, Mocha, Gold Colour",
-    code: "CW15006",
-    price: "12,499",
-    oldPrice: "14,499",
-  },
-  {
-    id: 2,
-    image: "/images/products2/p2.png",
-    title: "Essentielle Snake Bracelet Gold Colour",
-    code: "CB13309",
-    price: "8,599",
-    oldPrice: "9,199",
-  },
-  {
-    id: 3,
-    image: "/images/products2/p3.png",
-    title: "Sacrosié Crossbody Bag, Black, Gold Colour",
-    code: "CB13309",
-    price: "2,499",
-    oldPrice: "2,999",
-  },
-  {
-    id: 4,
-    image: "/images/products2/p4.png",
-    title: "Gracieuse Petite Watch Steel, White, Gold Colour",
-    code: "CB13309",
-    price: "9,899",
-    oldPrice: "10,399",
-  },
-  {
-    id: 5,
-    image: "/images/products2/p5.png",
-    title: "Essentielle Round Hoop Earring Gold Colour",
-    code: "CB13309",
-    price: "15,899",
-    oldPrice: "16,499",
-  },
-  {
-    id: 6,
-    image: "/images/products2/p1.png",
-    title: "Belisenna Watch Double Leather, Mocha, Gold Colour",
-    code: "CW15006",
-    price: "12,499",
-    oldPrice: "14,499",
-  },
-];
+import { products } from "@/lib/data";
 
 const blogs = [
   {
@@ -109,10 +59,10 @@ export default function ProductDetail() {
     setCanNext(embla.canScrollNext());
 
     embla.on("select", () => {
-      setCanPrev(embla.canScrollPrev());
+      setCanPrev(embla.canScrollPrev()); 
       setCanNext(embla.canScrollNext());
-    });
-  };
+    }); 
+  }; 
   
   return (
     <main className="pt-11.5">
@@ -161,7 +111,7 @@ export default function ProductDetail() {
         <div className="relative mt-16">
           <Carousel opts={{ align: "start", loop: false }} setApi={onInit}>
             <CarouselContent className="-ml-6">
-              {products2.map((product) => (
+              {products.map((product) => (
                 <CarouselItem
                   key={product.id}
                   className="pl-6 basis-full sm:basis-1/2 lg:basis-[20%]"

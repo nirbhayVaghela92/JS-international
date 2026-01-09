@@ -23,6 +23,7 @@ import { Card } from "@/components/ui/card";
 import { HiOutlineCalendar } from "react-icons/hi";
 import VideoSection from "@/components/sections/VideoSection";
 import { routes } from "@/lib/routes";
+import { products } from "@/lib/data";
 
 const banners = [
   {
@@ -70,72 +71,6 @@ const categories = [
   },
 ];
 
-const products = [
-  {
-    id: 1,
-    image: "/images/products/earrings.png",
-    title: "Lillypearlie Women's Miscellaneous Earrings",
-    code: "CW15006",
-    price: "800",
-    oldPrice: "1,999",
-  },
-  {
-    id: 2,
-    image: "/images/products/watch-blue-dial.png",
-    title: "Quadrus Watch Steel, Blue, Silver Colour",
-    code: "CB13309",
-    price: "14,199",
-    oldPrice: "15,399",
-  },
-  {
-    id: 3,
-    image: "/images/products/black-bag.png",
-    title: "Sacroisé Crossbody Bag, Black, Gold Colour",
-    code: "CB13309",
-    price: "2,499",
-    oldPrice: "2,999",
-  },
-  {
-    id: 4,
-    image: "/images/products/black-watch.png",
-    title: "Anthéor Multifunction Watch Leather Blue, Rose Gold",
-    code: "CB13309",
-    price: "9,899",
-    oldPrice: "10,399",
-  },
-  {
-    id: 5,
-    image: "/images/products/silver-watch.png",
-    title: "Lillypearlie Women's Miscellaneous Earrings",
-    code: "CW15006",
-    price: "800",
-    oldPrice: "1,999",
-  },
-  {
-    id: 6,
-    image: "/images/products/watch-steel.png",
-    title: "Quadrus Watch Steel, Blue, Silver Colour",
-    code: "CB13309",
-    price: "14,199",
-    oldPrice: "15,399",
-  },
-  {
-    id: 7,
-    image: "/images/products/bracelet.png",
-    title: "Sacroisé Crossbody Bag, Black, Gold Colour",
-    code: "CB13309",
-    price: "2,499",
-    oldPrice: "2,999",
-  },
-  {
-    id: 8,
-    image: "/images/products/leather-watch.png",
-    title: "Anthéor Multifunction Watch Leather Blue, Rose Gold",
-    code: "CB13309",
-    price: "9,899",
-    oldPrice: "10,399",
-  },
-];
 
 const testimonials = [
   {
@@ -188,56 +123,6 @@ const blogs = [
   },
 ];
 
-const products2 = [
-  {
-    id: 1,
-    image: "/images/products2/p1.png",
-    title: "Belisenna Watch Double Leather, Mocha, Gold Colour",
-    code: "CW15006",
-    price: "12,499",
-    oldPrice: "14,499",
-  },
-  {
-    id: 2,
-    image: "/images/products2/p2.png",
-    title: "Essentielle Snake Bracelet Gold Colour",
-    code: "CB13309",
-    price: "8,599",
-    oldPrice: "9,199",
-  },
-  {
-    id: 3,
-    image: "/images/products2/p3.png",
-    title: "Sacrosié Crossbody Bag, Black, Gold Colour",
-    code: "CB13309",
-    price: "2,499",
-    oldPrice: "2,999",
-  },
-  {
-    id: 4,
-    image: "/images/products2/p4.png",
-    title: "Gracieuse Petite Watch Steel, White, Gold Colour",
-    code: "CB13309",
-    price: "9,899",
-    oldPrice: "10,399",
-  },
-  {
-    id: 5,
-    image: "/images/products2/p5.png",
-    title: "Essentielle Round Hoop Earring Gold Colour",
-    code: "CB13309",
-    price: "15,899",
-    oldPrice: "16,499",
-  },
-  {
-    id: 6,
-    image: "/images/products2/p1.png",
-    title: "Belisenna Watch Double Leather, Mocha, Gold Colour",
-    code: "CW15006",
-    price: "12,499",
-    oldPrice: "14,499",
-  },
-];
 
 const items = [
   {
@@ -406,7 +291,7 @@ export default function HomePage() {
         <div className="relative mt-16">
           <Carousel opts={{ align: "start", loop: false }} setApi={onInit}>
             <CarouselContent className="-ml-6">
-              {products2.map((product) => (
+              {products?.slice(0, 5).map((product) => (
                 <CarouselItem
                   key={product.id}
                   className="pl-6 basis-full sm:basis-1/2 lg:basis-[20%]"
@@ -479,7 +364,7 @@ export default function HomePage() {
 
           {/* Products Grid */}
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {products.map((product) => (
+            {products.slice(0, 4).map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>

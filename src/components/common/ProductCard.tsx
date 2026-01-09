@@ -26,8 +26,8 @@ export default function ProductCard({ product }) {
         </button>
 
         <Image
-          src={product.image}
-          alt={product.title}
+          src={product.coverImageUrl}
+          alt={product.title} 
           width={375}
           height={375}
           className="mx-auto h-93.75 w-full object-contain"
@@ -36,8 +36,8 @@ export default function ProductCard({ product }) {
 
       {/* Content */}
       <div className="py-4 text-left">
-        <h3 className="text-[20px] text-black font-medium leading-snug sm:min-h-[82px] xl:min-h-[56px]">
-          {product.title}
+        <h3 className="text-[20px] text-black font-medium leading-snug sm:min-h-20.5 xl:min-h-14">
+          {product.name}
         </h3>
 
         <p className="mt-1 text-xs text-gray-400">{product.code}</p>

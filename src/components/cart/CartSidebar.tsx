@@ -1,16 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Button from "@/components/common/Button";
-import { FiX, FiTrash2, FiMinus, FiPlus } from "react-icons/fi";
 import Image from "next/image";
 import CartItem from "./CartItem";
 import { useRouter } from "next/navigation";
-import { routes } from "@/lib/routes";
+import { useCartStore } from "@/hooks/store/useCartStore";
+import { formatPrice } from "@/helpers/commonHelpers";
 
 export default function CartSidebar({ isOpen, onClose }) {
-  const [cartItems, setCartItems] = useState([]);
   const router = useRouter();
+  const { cartItems, getTotalCartAmount } = useCartStore();
   // Lock scroll
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "auto";
@@ -53,7 +53,7 @@ export default function CartSidebar({ isOpen, onClose }) {
 
           <button onClick={onClose} className="text-red-500 text-xl">
             <Image
-            className="w-10.5 h-10.5 cursor-pointer"
+              className="w-10.5 h-10.5 cursor-pointer"
               src="/images/icons/close.png"
               alt="Shield image"
               width={54}
@@ -64,7 +64,13 @@ export default function CartSidebar({ isOpen, onClose }) {
 
         {/* Cart Item */}
         <div className="flex-1 overflow-y-auto px-8 py-6">
-          <CartItem />
+          {cartItems.length === 0 ? (
+            <p className="text-center text-gray-500">Your cart is empty.</p>
+          ) : (
+            cartItems.map((product) => (
+              <CartItem key={product.id} cartItemDetails={product} />
+            ))
+          )}
         </div>
 
         {/* Footer */}
@@ -74,7 +80,7 @@ export default function CartSidebar({ isOpen, onClose }) {
               Subtotal
             </h3>
             <p className="text-[30px] md:text-[40px] font-semibold text-[#094745]">
-              Rs. 9,405
+              Rs. {formatPrice(getTotalCartAmount())}
             </p>
           </div>
 
@@ -104,7 +110,7 @@ export default function CartSidebar({ isOpen, onClose }) {
               px="px-6"
               py="py-3"
               fontSize="text-sm"
-              className="w-full md:w-1/2 cursor-pointer" 
+              className="w-full md:w-1/2 cursor-pointer"
             >
               CHECKOUT
             </Button>

@@ -1,60 +1,65 @@
+import { useCartStore } from "@/hooks/store/useCartStore";
+import type { CartItem } from "@/types";
 import Image from "next/image";
-import { useState } from "react";
-import { FiMinus, FiPlus, FiTrash2 } from "react-icons/fi";
+import { FC } from "react";
+import { FiTrash2 } from "react-icons/fi";
+import CartQuantityActions from "./CartQuantityActions";
+import { formatPrice } from "@/helpers/commonHelpers";
 
-const CartItem = () => {
-  const [qty, setQty] = useState(1);
-  const stocks = 5;
-  
+interface CartItemProps {
+  cartItemDetails: CartItem;
+}
+
+const CartItem: FC<CartItemProps> = ({ cartItemDetails }) => {
+  const { removeFromCart, getItemTotalAmount } = useCartStore();
+
   return (
-    <div className="flex flex-col md:flex-row justify-between pb-6 border-b">
+    <div className="flex flex-col md:flex-row md:items-center justify-between pb-6 border-b min-h-[180px]">
+      {/* Left */}
       <div className="flex flex-col sm:flex-row gap-6">
-        {/* Image */}
         <Image
-          src="/images/productDetail/p1.png"
+          src={cartItemDetails.coverImageUrl}
           width={140}
           height={140}
-          alt="product image"
+          className="object-cover flex-shrink-0"
+          alt={cartItemDetails.name}
         />
 
-        {/* Details */}
         <div className="flex-1">
-          <h4 className="font-medium max-w-79 text-[18px] text-[#1B1918]">
-            Minuit Watch Mesh, White, Silver Colour
+          <h4 className="font-medium text-[18px] text-[#1B1918]">
+            {cartItemDetails.name}
           </h4>
 
           <p className="mt-3 text-[16px] text-gray-500 flex items-center gap-2">
             Color Options:
-            <span className="w-9 h-9 rounded-full bg-[#dddddd]" />
+            <span
+              style={{ backgroundColor: cartItemDetails.selectedColorOptions }}
+              className="w-9 h-9 rounded-full border"
+            />
           </p>
         </div>
       </div>
 
-      {/* Quantity + Price */}
-      <div className="flex flex-col items-end gap-8.25">
-        <div className="flex gap-2">
-          <button className="text-red-500 cursor-pointer">
+      {/* Right */}
+      <div className="flex flex-col gap-2 justify-between items-end h-full mt-4 md:mt-0">
+        <div className="flex gap-3 items-center">
+          <button
+            className="text-red-500"
+            onClick={() => removeFromCart(cartItemDetails.id)}
+          >
             <FiTrash2 />
           </button>
 
-          <div className="flex items-center border px-3 py-2 gap-4 text-[#1B1918]">
-            <button
-              onClick={() => setQty(qty > 1 ? qty - 1 : 1)}
-              className="cursor-pointer "
-            >
-              <FiMinus />
-            </button>
-            <span className="block sm:px-5 ">{qty}</span>
-            <button
-              onClick={() => setQty(qty < stocks ? qty + 1 : qty)}
-              className="cursor-pointer h-full "
-            >
-              <FiPlus />
-            </button>
-          </div>
+          <CartQuantityActions
+            cartId={cartItemDetails.id}
+            quantity={cartItemDetails.quantity}
+            stockQuantity={cartItemDetails.stockQuantity}
+          />
         </div>
 
-        <p className="font-semibold text-[20px] text-[#094745]">Rs. 9,405</p>
+        <p className="font-semibold text-[20px] text-[#094745]">
+          Rs. {formatPrice(getItemTotalAmount(cartItemDetails.id))}
+        </p>
       </div>
     </div>
   );

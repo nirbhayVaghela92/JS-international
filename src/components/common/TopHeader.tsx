@@ -18,13 +18,14 @@ import { routes } from "@/lib/routes";
 import { SearchBar } from "./SearchBar";
 import { useGetAuthDetails } from "@/hooks/useGetAuthDetails";
 import CartIcon from "@/components/cart/CartIcon";
+import { useCartStore } from "@/hooks/store/useCartStore";
 
 export default function TopHeader() {
   const pathName = usePathname();
   const [open, setOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
   const router = useRouter();
-
+  const { cartItems } = useCartStore();
   const { isAuthenticated, user } = useGetAuthDetails();
 
   return (
@@ -130,23 +131,16 @@ export default function TopHeader() {
               {/* 🔹 Icons */}
               <div className="flex items-center gap-3 md:gap-5 bg-[#f7ecd6] px-3 md:px-6 py-7 md:py-11">
                 {/* Search icon slot (same size as other icons) */}
-                {/* <div className="relative shrink-0"> */}
-                  <SearchBar  />
-                {/* </div> */}
+                <SearchBar className="w-6! h-6!" />
 
-                {/* Other icons */}
-                {/* <LiaShoppingCartSolid
-                  className="text-xl cursor-pointer text-[#1B1918] hover:text-[#0f4a45]"
-                  onClick={() => setCartOpen(true)}
-                /> */}
                 <CartIcon
-                  className="w-5! h-5!"
-                  itemCount={2} 
+                  className="w-6! h-6!"
+                  itemCount={cartItems.length}
                   onClick={() => setCartOpen(true)}
                 />
 
                 <PiHeart
-                  className="w-5! h-5! text-xl cursor-pointer text-[#1B1918] hover:text-[#0f4a45]"
+                  className="w-6! h-6! text-xl cursor-pointer text-[#1B1918] hover:text-[#0f4a45]"
                   onClick={() => router.push(routes.wishList)}
                 />
 
@@ -155,7 +149,7 @@ export default function TopHeader() {
                   onClick={() => router.push(routes.signIn)}
                 /> */}
                 <FiUser
-                  className="w-5! h-5! text-xl cursor-pointer text-[#1B1918] hover:text-[#0f4a45]"
+                  className="w-6! h-6! text-xl cursor-pointer text-[#1B1918] hover:text-[#0f4a45]"
                   onClick={() =>
                     router.push(
                       isAuthenticated ? routes.editUserDetails : routes.signIn
@@ -164,7 +158,7 @@ export default function TopHeader() {
                 />
 
                 <button
-                  className="lg:hidden text-2xl shrink-0 text-[#1B1918]"
+                  className="lg:hidden text-2xl shrink-0 text-[#1B1918] cursor-pointer"
                   onClick={() => setOpen(!open)}
                 >
                   {open ? <FiX /> : <FiMenu />}

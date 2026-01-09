@@ -15,14 +15,14 @@ export const routes = {
   register: "/register",
   editUserDetails: "/edit-profile",
   product: "/products",
-  productDetails: (id) => `/products/${id}`,
+  productDetails: (productId) => `/products/${productId}`,
   wishList: "/wish-list",
   menWatches: "/men-watches",
   womenWatches: "/women-watches",
   purses: "/purses",
   jewellery: "/jewellery",
   contactSupport: "/contact-support",
-  watches:"/watches",
+  watches: "/watches",
   // featuredCollections:"/featured-collections",
   // sale:"/sale"
 };
