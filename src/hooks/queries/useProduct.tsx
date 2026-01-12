@@ -4,7 +4,13 @@ import {
   toggleWishList,
 } from "@/services/product.service";
 import { ProductListParams } from "@/types";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  keepPreviousData,
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 
 export const useProductList = (params: ProductListParams) => {
   const {
@@ -51,6 +57,66 @@ export const useProductList = (params: ProductListParams) => {
   };
 };
 
+export const useInfiniteProductList = (
+  params: ProductListParams,
+  enabled: boolean = true
+) => {
+  const {
+    category,
+    arrival_sort,
+    bestSeller,
+    price_sort,
+    limit,
+    page,
+    newArrival,
+    search,
+    wishList,
+  } = params;
+
+  const queryResult = useInfiniteQuery({
+    queryKey: [
+      "useInfiniteProductList",
+      category,
+      arrival_sort,
+      bestSeller,
+      price_sort,
+      limit,
+      newArrival,
+      search,
+      wishList,
+    ],
+    queryFn: async ({ pageParam = 1 }) => {
+      const res = await productList({
+        page: pageParam ?? page,
+        limit: limit || 10,
+        ...(category && { category }),
+        ...(price_sort && { price_sort }),
+        ...(arrival_sort && { arrival_sort }),
+        ...(newArrival && { newArrival }),
+        ...(bestSeller && { bestSeller }),
+        ...(wishList && { wishList }),
+        ...(search && search !== "" && { search }),
+      });
+
+      return res;
+    },
+    getNextPageParam: (lastPage) => {
+      const pagination = lastPage?.data?.data?.pagination;
+
+      if (pagination?.page < pagination?.total_pages) {
+        return pagination.page + 1;
+      }
+
+      return undefined;
+    },
+    initialPageParam: 1,
+    placeholderData: keepPreviousData,
+    enabled,
+  });
+
+  return queryResult;
+};
+
 export const useProductDetails = (slug: string) => {
   const response = useQuery({
     queryKey: ["useProductDetails", slug],
@@ -60,7 +126,7 @@ export const useProductDetails = (slug: string) => {
     },
   });
   return {
-    data: response.data?.data?.product,
+    data: response.data?.data,
     isLoading: response.isLoading,
   };
 };

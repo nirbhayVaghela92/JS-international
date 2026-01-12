@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Button from "@/components/common/Button";
 import { FiChevronUp, FiChevronDown, FiMinus, FiPlus } from "react-icons/fi";
 import { HiStar } from "react-icons/hi";
@@ -11,7 +12,7 @@ import { useCartStore } from "@/hooks/store/useCartStore";
 import { products } from "@/lib/data";
 import { useParams } from "next/navigation";
 import toast from "react-hot-toast";
-import { formatPrice } from "@/helpers/commonHelpers";
+import { formatPrice, getFullImageUrl } from "@/helpers/commonHelpers";
 import CartQuantityActions from "../cart/CartQuantityActions";
 import { useProductDetails } from "@/hooks/queries/useProduct";
 
@@ -29,7 +30,7 @@ export default function ProductDetails() {
 
   console.log(productDetail, "productDetails");
 
-  const cartItem = getItem(Number(productDetail?.id));
+  const cartItem = getItem(Number(productDetail?.product?.id));
 
   const scrollUp = () => {
     thumbRef.current?.scrollBy({ top: -120, behavior: "smooth" });
@@ -47,10 +48,11 @@ export default function ProductDetails() {
     });
   };
 
-  // if (!productDetail) {
-  //   toast.error("Product not found");
-  //   return;
-  // }
+  useEffect(() => {
+    if (productDetail?.images?.length > 0) {
+      setActiveImage(productDetail.images[0]?.image_url);
+    }
+  }, [productDetail]);
 
   return (
     <section className="py-20">
@@ -72,7 +74,7 @@ export default function ProductDetails() {
                 {productDetail?.images?.map((img, index) => (
                   <button
                     key={index}
-                    onClick={() => setActiveImage(img)}
+                    onClick={() => setActiveImage(img?.image_url)}
                     className={`w-20 sm:w-30 md:w-35 lg:w-full lg:max-w-35 bg-gray-100 border
                       ${
                         activeImage === img
@@ -84,8 +86,8 @@ export default function ProductDetails() {
                     <Image
                       width={140}
                       height={140}
-                      src={img}
-                      alt="Thumbnail"
+                      src={getFullImageUrl(img?.image_url)}
+                      alt={productDetail?.product?.name || "Product"}
                       className="w-full h-full object-contain"
                     />
                   </button>
@@ -100,7 +102,7 @@ export default function ProductDetails() {
             {/* Main Image */}
             <div className="w-full max-w-166.25">
               <Image
-                src={activeImage}
+                src={getFullImageUrl(activeImage)}
                 alt="Product"
                 className=" w-full"
                 width={665}
@@ -112,19 +114,19 @@ export default function ProductDetails() {
           {/* RIGHT : PRODUCT INFO */}
           <div className="max-w-155.5">
             <h1 className="text-3xl font-sans font-bold text-[#094745]">
-              {productDetail?.name}
+              {productDetail?.product?.name}
             </h1>
 
-            <p className="mt-2 text-sm text-gray-500">{productDetail?.code}</p>
+            <p className="mt-2 text-sm text-gray-500">{productDetail?.product?.code}</p>
 
             {/* Price */}
             <div className="mt-6 flex items-center gap-4">
               <span className="text-[32px] font-semibold text-[#094745]">
-                Rs. {formatPrice(productDetail?.price)}
+                Rs. {formatPrice(Number(productDetail?.product?.price))}
               </span>
-              <span className="text-[32px] text-gray-400 line-through">
+              {/* <span className="text-[32px] text-gray-400 line-through">
                 Rs. {formatPrice(productDetail?.oldPrice)}
-              </span>
+              </span> */}
             </div>
 
             <p className="mt-1 text-sm text-gray-500">
@@ -149,18 +151,18 @@ export default function ProductDetails() {
             <div>
               <p className="mb-4 font-medium">Color Options:</p>
               <div className="flex gap-4">
-                {productDetail?.colorOptions?.map((c) => (
+                {productDetail?.variants?.map((c) => (
                   <button
-                    key={c}
-                    onClick={() => setActiveColor(c)}
+                    key={c?.id}
+                    onClick={() => setActiveColor(c?.color)}
                     className={`w-10 h-10 rounded-full border-2
                         ${
-                          activeColor === c
+                          activeColor === c?.color
                             ? "border-white ring-2 ring-[#094745]"
                             : "border-transparent"
                         }
                       `}
-                    style={{ backgroundColor: c }}
+                    style={{ backgroundColor: c?.color }}
                   />
                 ))}
               </div>

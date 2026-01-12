@@ -49,9 +49,9 @@ export function SearchBar({ className }: { className?: string }) {
   } = useProductList({
     search: searchQuery,
     page: 1,
-    limit: 12,
+    limit: 500,
   });
-  console.log(productList, "productList")
+  console.log(productList, "productList");
   useEffect(() => {
     if (searchQuery.trim() === "") {
       setFilteredProducts(sampleProducts);
@@ -147,29 +147,31 @@ export function SearchBar({ className }: { className?: string }) {
       >
         <Command>
           <CommandList className="max-h-[300px]">
-            {productList?.length === 0 ? (
+            {isLoading && <CommandEmpty>Loading...</CommandEmpty>}
+
+            {!isLoading && productList?.length === 0 && (
               <CommandEmpty>No products found.</CommandEmpty>
-            ) : (
-              <CommandGroup heading="Products">
-                {productList?.map((product) => (
-                  <CommandItem
-                    key={product.id}
-                    onSelect={() => handleSelectProduct(product?.slug)}
-                    className="flex items-center justify-between"
-                  >
-                    <div className="flex flex-col">
-                      <span className="font-medium">{product.name}</span>
-                      <span className="text-xs text-muted-foreground">
-                        {product.category_name}
-                      </span>
-                    </div>
-                    <span className="text-sm font-semibold">
-                      ${formatPrice(Number(product?.price))}
-                    </span>
-                  </CommandItem>
-                ))}
-              </CommandGroup>
             )}
+
+            <CommandGroup heading="Products">
+              {productList?.map((product) => (
+                <CommandItem
+                  key={product?.id}
+                  onSelect={() => handleSelectProduct(product?.slug)}
+                  className="flex items-center justify-between"
+                >
+                  <div className="flex flex-col">
+                    <span className="font-medium">{product?.name}</span>
+                    <span className="text-xs text-muted-foreground">
+                      {product?.category_name}
+                    </span>
+                  </div>
+                  <span className="text-sm font-semibold">
+                    ₹{formatPrice(Number(product?.price))}
+                  </span>
+                </CommandItem>
+              ))}
+            </CommandGroup>
           </CommandList>
         </Command>
       </PopoverContent>

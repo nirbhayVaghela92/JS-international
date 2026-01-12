@@ -14,11 +14,9 @@ import { useState } from "react";
 import ProductCard from "@/components/common/ProductCard";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import FaqSection from "@/components/sections/FaqSection";
-import { HiOutlineCalendar } from "react-icons/hi";
-import Button from "@/components/common/Button";
 import { routes } from "@/lib/routes";
-import { products } from "@/lib/data";
-import BlogSection from "../sections/BlogSection";
+import { useProductList } from "@/hooks/queries/useProduct";
+import { Loader } from "@/components/common/Loader";
 
 const blogs = [
   {
@@ -49,6 +47,15 @@ export default function ProductDetail() {
   const [api, setApi] = useState(null);
   const [canPrev, setCanPrev] = useState(false);
   const [canNext, setCanNext] = useState(true);
+  const {
+    data: productList,
+    isLoading,
+    pagination,
+  } = useProductList({
+    wishList: true,
+    page: 1,
+    limit: 12,
+  });
 
   // const categoryLabel = getSectionLabel(category);
 
@@ -110,14 +117,30 @@ export default function ProductDetail() {
         <div className="relative mt-16">
           <Carousel opts={{ align: "start", loop: false }} setApi={onInit}>
             <CarouselContent className="-ml-6">
-              {products.map((product) => (
+              {/* {productList?.map((product) => (
                 <CarouselItem
                   key={product.id}
                   className="pl-6 basis-full sm:basis-1/2 lg:basis-[20%]"
                 >
                   <ProductCard product={product} />
                 </CarouselItem>
-              ))}
+              ))} */}
+              {isLoading ? (
+                <Loader loadingText="Loading products..." />
+              ) : productList?.length > 0 ? (
+                productList?.map((product) => (
+                  <CarouselItem
+                    key={product.id}
+                    className="pl-6 basis-full sm:basis-1/2 lg:basis-[20%]"
+                  >
+                    <ProductCard key={product.id} product={product} />
+                  </CarouselItem>
+                ))
+              ) : (
+                <p className="text-center text-black col-span-full">
+                  No products found.
+                </p>
+              )}
             </CarouselContent>
           </Carousel>
 
