@@ -249,7 +249,6 @@ export default function HomePage() {
       </div>
 
       {/* Catergory Section Start Here */}
-
       <section className="py-28" id="categories">
         <div className="cus-container">
           {/* Heading */}
@@ -322,7 +321,7 @@ export default function HomePage() {
             onClick={() => api?.scrollPrev()}
             disabled={!canPrev}
             className={`
-              absolute top-[35%] left-5 z-10
+              absolute top-[35%] left-5 z-5
               flex h-14 w-14 items-center justify-center
               transition
               ${canPrev ? "bg-[#E7B250]" : "bg-[#1B1918] cursor-not-allowed"}
@@ -336,7 +335,7 @@ export default function HomePage() {
             onClick={() => api?.scrollNext()}
             disabled={!canNext}
             className={`
-              absolute top-[35%] right-5 z-10
+              absolute top-[35%] right-5 z-5
               flex h-14 w-14 items-center justify-center
               transition
               ${canNext ? "bg-[#E7B250]" : "bg-[#1B1918] cursor-not-allowed"}

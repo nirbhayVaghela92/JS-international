@@ -11,7 +11,7 @@ import {
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { FiLogOut, FiUser } from "react-icons/fi";
-import { PiUserCircleGear } from "react-icons/pi";
+import { PiHeart, PiUserCircleGear } from "react-icons/pi";
 import { useRouter } from "next/navigation";
 import { routes } from "@/lib/routes";
 
@@ -52,10 +52,7 @@ export function UserMenu({
         </Button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent
-        align="end"
-        className="w-52 rounded-xl shadow-lg"
-      >
+      <DropdownMenuContent align="end" className="w-52 rounded-xl shadow-lg">
         <DropdownMenuLabel className="text-sm font-medium">
           {userName}
         </DropdownMenuLabel>
@@ -68,6 +65,14 @@ export function UserMenu({
         >
           <PiUserCircleGear className="h-4 w-4" />
           Edit Profile
+        </DropdownMenuItem>
+
+        <DropdownMenuItem
+          onClick={() => router.push(routes.wishList)}
+          className="cursor-pointer gap-2"
+        >
+          <PiHeart className="h-4 w-4" />
+          Wish List
         </DropdownMenuItem>
 
         <DropdownMenuSeparator />

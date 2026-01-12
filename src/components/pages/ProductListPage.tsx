@@ -86,8 +86,8 @@ export const ProductListPage: FC<ProductListPageProps> = ({ category }) => {
       ...prev,
       price_sort: undefined,
       newArrival: false,
-    }))
-  }
+    }));
+  };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -140,7 +140,7 @@ export const ProductListPage: FC<ProductListPageProps> = ({ category }) => {
 
       <section className="w-full px-4 py-6">
         <div className="cus-container">
-          <div className="flex flex-wrap items-center justify-end gap-4">
+          <div className="flex flex-wrap items-center justify-between gap-4">
             {/* LEFT: Filter */}
             <div className="relative" ref={filterRef}>
               <div className="flex items-center gap-3">
@@ -149,7 +149,7 @@ export const ProductListPage: FC<ProductListPageProps> = ({ category }) => {
                     setFilterOpen(!filterOpen);
                     setSortOpen(false);
                   }}
-                  className="border border-[#E7B250] px-4 py-3 cursor-pointer!"
+                  className="border border-[#E7B250] px-3 py-2 cursor-pointer!"
                 >
                   <Image
                     width={20}
@@ -160,7 +160,10 @@ export const ProductListPage: FC<ProductListPageProps> = ({ category }) => {
                   />
                 </button>
 
-                <span className="text-black">{getLabelFromKey(selectedFilter, filterOptions.slice()) ?? "Filter"}</span>
+                <span className="text-black">
+                  {getLabelFromKey(selectedFilter, filterOptions.slice()) ||
+                    "Filters"}
+                </span>
               </div>
 
               {filterOpen && (
@@ -207,71 +210,9 @@ export const ProductListPage: FC<ProductListPageProps> = ({ category }) => {
             </div>
 
             {/* RIGHT: Sort + Count */}
-            {/* <div className="relative" ref={sortRef}>
-              <button
-                onClick={() => {
-                  setSortOpen(!sortOpen);
-                  setFilterOpen(false);
-                }}
-                className="
-                  flex items-center justify-between gap-4
-                  border border-[#E7B250]
-                  px-5 py-3
-                  text-sm
-                  min-w-[180px]
-                "
-              >
-                <span className="text-black">{selectedSort ?? "Sort By"}</span>
-                <FiChevronDown className="text-[#E7B250]" />
-              </button>
-
-              {sortOpen && (
-                <div className="absolute right-0 top-full z-20 mt-2 w-full bg-black p-4 text-sm text-white">
-                  {selectedSort && (
-                    <>
-                      <p
-                        onClick={() => {
-                          setSelectedSort(null);
-                          setSortOpen(false);
-                        }}
-                        className="
-                          mb-2 cursor-pointer!
-                          text-xs text-[#9B9B9B]
-                          hover:text-[#E7B250]
-                        "
-                      >
-                        Clear Sort
-                      </p>
-
-                      <div className="mb-2 h-px bg-white/10" />
-                    </>
-                  )}
-
-                  {["Price: Low to High", "Price: High to Low"].map(
-                    (item) => (
-                      <p
-                        key={item}
-                        onClick={() => {
-                          setSelectedSort(item);
-                          setSortOpen(false);
-                        }}
-                        className={`
-                          py-1 cursor-pointer
-                          hover:text-[#E7B250]
-                          ${
-                            selectedSort === item
-                              ? "text-[#E7B250] font-medium"
-                              : ""
-                          }
-                        `}
-                      >
-                        {item}
-                      </p>
-                    )
-                  )}
-                </div>
-              )}
-            </div> */}
+            <p className="hidden sm:block text-sm text-black">
+              {categoryLabel} <span>({pagination?.total ?? 0})</span>
+            </p>
           </div>
         </div>
       </section>
@@ -279,26 +220,28 @@ export const ProductListPage: FC<ProductListPageProps> = ({ category }) => {
       <section className="py-12">
         <div className="cus-container">
           {/* GRID */}
-          <div
-            className="
+          {isLoading ? (
+            <Loader loadingText="Loading products..." />
+          ) : (
+            <div
+              className="
               grid gap-6
               grid-cols-1
               sm:grid-cols-2
               lg:grid-cols-4
             "
-          >
-            {isLoading ? (
-              <Loader loadingText="Loading products..." />
-            ) : productList?.length > 0 ? (
-              productList?.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))
-            ) : (
-              <p className="text-center text-black col-span-full">
-                No products found.
-              </p>
-            )}
-          </div>
+            >
+              {!isLoading && productList?.length > 0 ? (
+                productList?.map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))
+              ) : (
+                <p className="text-center text-black col-span-full">
+                  No products found.
+                </p>
+              )}
+            </div>
+          )}
         </div>
       </section>
     </main>

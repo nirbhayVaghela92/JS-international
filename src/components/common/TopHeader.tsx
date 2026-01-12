@@ -67,7 +67,7 @@ export default function TopHeader() {
                 <Image
                   src="/images/common/logo.png" // you will add image
                   alt="JS International"
-                  width={340}
+                  width={350}
                   height={69}
                   className="h-auto w-35! md:w-45! xl:w-85!"
                 />
@@ -130,34 +130,34 @@ export default function TopHeader() {
               </nav>
 
               {/* 🔹 Icons */}
-              <div className="flex items-center gap-3 md:gap-5 bg-[#f7ecd6] px-3 md:px-6 py-7 md:py-11">
-                <SearchBar className="w-6 h-6" />
+                <div className="flex items-center gap-3 md:gap-5 bg-[#f7ecd6] px-3 md:px-6 py-7 md:py-11">
+                  <SearchBar className="w-6 h-6" />
 
-                <CartIcon
-                  className="p-0"
-                  itemCount={cartItems.length}
-                  onClick={() => setCartOpen(true)}
-                />
+                  <CartIcon
+                    className="p-0"
+                    itemCount={cartItems.length}
+                    onClick={() => setCartOpen(true)}
+                  />
 
-                <PiHeart
-                  className="w-6! h-6! cursor-pointer text-[#1B1918] hover:text-[#0f4a45]"
-                  onClick={() => router.push(routes.wishList)}
-                />
+                  {/* <PiHeart
+                    className="w-6! h-6! cursor-pointer text-[#1B1918] hover:text-[#0f4a45]"
+                    onClick={() => router.push(routes.wishList)}
+                  /> */}
 
-                <UserMenu
-                  isAuthenticated={isAuthenticated}
-                  userName={user?.name}
-                  onLogout={handleLogout}
-                />
+                  <UserMenu
+                    isAuthenticated={isAuthenticated}
+                    userName={user?.name}
+                    onLogout={handleLogout}
+                  />
 
-                {/* Mobile Menu Toggle */}
-                <button
-                  className="lg:hidden text-2xl shrink-0 text-[#1B1918] cursor-pointer"
-                  onClick={() => setOpen(!open)}
-                >
-                  {open ? <FiX /> : <FiMenu />}
-                </button>
-              </div>
+                  {/* Mobile Menu Toggle */}
+                  <button
+                    className="lg:hidden text-2xl shrink-0 text-[#1B1918] cursor-pointer"
+                    onClick={() => setOpen(!open)}
+                  >
+                    {open ? <FiX /> : <FiMenu />}
+                  </button>
+                </div>
             </div>
           </div>
 
