@@ -12,3 +12,11 @@ export const getFullImageUrl = (imagePath: string) => {
   if (!imagePath) return "";
   return `${process.env.NEXT_PUBLIC_BACKEND_URL}/${imagePath}`;
 }
+
+export const capitalizeWords = (str: string): string => {
+  if (!str) return "";
+  return str
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};

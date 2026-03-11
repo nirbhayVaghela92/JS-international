@@ -14,6 +14,10 @@ import { FiLogOut, FiUser } from "react-icons/fi";
 import { PiHeart, PiUserCircleGear } from "react-icons/pi";
 import { useRouter } from "next/navigation";
 import { routes } from "@/lib/routes";
+import { capitalizeWords } from "@/helpers/commonHelpers";
+import { FaList, FaShoppingCart } from "react-icons/fa";
+import { FaBox } from "react-icons/fa6";
+import { MdOutlineShoppingBag } from "react-icons/md";
 
 interface UserMenuProps {
   isAuthenticated: boolean;
@@ -54,7 +58,7 @@ export function UserMenu({
 
       <DropdownMenuContent align="end" className="w-52 rounded-xl shadow-lg">
         <DropdownMenuLabel className="text-sm font-medium">
-          {userName}
+          {capitalizeWords(userName)}
         </DropdownMenuLabel>
 
         <DropdownMenuSeparator />
@@ -73,6 +77,17 @@ export function UserMenu({
         >
           <PiHeart className="h-4 w-4" />
           Wish List
+        </DropdownMenuItem>
+
+        <DropdownMenuItem
+          onClick={() => router.push(routes.orders)}
+          className="cursor-pointer gap-2"
+        >
+          {/* <FaBox    className="h-4 w-4" /> */}
+          <MdOutlineShoppingBag     className="h-4 w-4" />
+          {/* <FaShoppingCart    className="h-4 w-4" /> */}
+
+          Order History
         </DropdownMenuItem>
 
         <DropdownMenuSeparator />

@@ -15,6 +15,8 @@ export const routes = {
   forgotPassword: "/forgot-password", 
   verifyOtp: "/verify-otp",
   resetPassword: "/reset-password",
+  orders: "/orders",
+  orderView: (orderId) => `/orders/${orderId}`,
   // featuredCollections:"/featured-collections",
   // sale:"/sale"
 };
@@ -36,4 +38,4 @@ export const publicRoutes: string[] = [
   routes.watches,
 ];
 
-export const protectedRoutes: string[] = [routes.editUserDetails , routes.wishList];
+export const protectedRoutes: string[] = [routes.editUserDetails , routes.wishList, routes.orders];

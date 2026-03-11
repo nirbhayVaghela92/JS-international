@@ -75,7 +75,7 @@ export default function TopHeader() {
             </div>
 
             <div className="flex lg:gap-7.5 xl:gap-20.5">
-              {/* 🔹 Desktop Menu */}
+              {/* Desktop Menu */}
               <nav className="hidden lg:flex items-center gap-6 xl:gap-8 font-medium">
                 <Link
                   className="text-[#1B1918] hover:text-[#0f4a45]"
