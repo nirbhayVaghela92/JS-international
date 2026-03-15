@@ -17,6 +17,7 @@ export const routes = {
   resetPassword: "/reset-password",
   orders: "/orders",
   orderView: (orderId) => `/orders/${orderId}`,
+  orderCheckout: "/checkout", 
   // featuredCollections:"/featured-collections",
   // sale:"/sale"
 };
@@ -38,4 +39,4 @@ export const publicRoutes: string[] = [
   routes.watches,
 ];
 
-export const protectedRoutes: string[] = [routes.editUserDetails , routes.wishList, routes.orders];
+export const protectedRoutes: string[] = [routes.editUserDetails , routes.wishList, routes.orders, routes.orderView(":orderId"), routes.orderCheckout];

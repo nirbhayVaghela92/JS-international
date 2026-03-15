@@ -14,6 +14,8 @@ export const API = {
   // resetPassword: "/admin/forgot-password/update-password",
   // changePassword: "/admin/account-settings/change-password",
 
+  // create order
+  createOrder: "/create-order",
   // submit contact query
   submitContactQuery: "/submit-query",
 };

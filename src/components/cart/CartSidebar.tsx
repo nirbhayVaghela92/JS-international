@@ -7,10 +7,29 @@ import CartItem from "./CartItem";
 import { useRouter } from "next/navigation";
 import { useCartStore } from "@/hooks/store/useCartStore";
 import { formatPrice } from "@/helpers/commonHelpers";
+import { routes } from "@/lib/routes";
+import { useGetAuthDetails } from "@/hooks/useGetAuthDetails";
+import toast from "react-hot-toast";
 
 export default function CartSidebar({ isOpen, onClose }) {
   const router = useRouter();
+  const { isAuthenticated } = useGetAuthDetails();
   const { cartItems, getTotalCartAmount } = useCartStore();
+
+  const handleCheckout = () => {
+    if (cartItems.length === 0) {
+      toast.error(
+        "Your cart is empty. Please add items to proceed to checkout.",
+      );
+      return;
+    }
+    if (!isAuthenticated) {
+      toast.error("Please log in to proceed to checkout.");
+      return;
+    }
+    router.push(routes.orderCheckout);
+    onClose();
+  };
 
   // Lock scroll
   useEffect(() => {
@@ -115,6 +134,7 @@ export default function CartSidebar({ isOpen, onClose }) {
               py="py-3"
               fontSize="text-sm"
               className="w-full md:w-1/2"
+              onClick={handleCheckout}
             >
               CHECKOUT
             </Button>

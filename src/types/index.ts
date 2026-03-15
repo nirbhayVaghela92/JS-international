@@ -72,3 +72,14 @@ export interface ProductListParams {
 }
 
 export type FilterOptionKey = typeof filterOptions[number]["key"];
+
+export type CheckoutItem = {
+  product_id: number;
+  variant_id: number | null;
+  quantity: number;
+};
+
+export type CheckoutRequestType = {
+  items: CheckoutItem[];
+  payment_method: "razorpay";
+};
