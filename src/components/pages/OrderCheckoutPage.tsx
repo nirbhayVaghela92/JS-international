@@ -11,6 +11,8 @@ import { useCreateOrder } from "@/hooks/queries/useOrder";
 import Image from "next/image";
 import { useCartStore } from "@/hooks/store/useCartStore";
 import { formatPrice } from "@/helpers/commonHelpers";
+import { useRouter } from "next/navigation";
+import { routes } from "@/lib/routes";
 
 interface CartItem {
   id: string;
@@ -37,7 +39,8 @@ const loadRazorpay = () => {
 };
 
 export default function CheckoutPage({}: CheckoutPageProps) {
-  const { cartItems, getTotalCartAmount } = useCartStore();
+  const router = useRouter();
+  const { cartItems, getTotalCartAmount, clearCart } = useCartStore();
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -105,10 +108,10 @@ export default function CheckoutPage({}: CheckoutPageProps) {
       key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID, 
       amount: res.data.amount,
       currency: res.data.currency,
-      name: "Your Store Name",
+      name: "JS International",
       description: "Order Payment",
       order_id: res.data.razorpay_order_id,
-
+      
       handler: function (response: any) {
         console.log("Payment Success", response);
 
@@ -119,7 +122,9 @@ export default function CheckoutPage({}: CheckoutPageProps) {
       response.razorpay_signature
       */
 
-        // call backend verify API here
+        // call b.ackend verify API here
+        router.push(routes.orders);
+        clearCart();
       },
 
       prefill: {

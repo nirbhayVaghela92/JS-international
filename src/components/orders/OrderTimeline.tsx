@@ -1,16 +1,18 @@
-'use client'
+"use client";
 
-import { Card } from '@/components/ui/card'
-import { CheckCircle2, Circle } from 'lucide-react'
-import type { Order } from '@/lib/mock-orders'
-import { getStatusSteps, formatDate } from '@/lib/order-utils'
+import { Card } from "@/components/ui/card";
+import { formatDate } from "@/helpers/commonHelpers";
+import { getStatusSteps } from "@/helpers/order-utils";
+import { Order } from "@/types";
+import { CheckCircle2, Circle } from "lucide-react";
+
 
 interface OrderTimelineProps {
-  order: Order
+  order: Order;
 }
 
 export function OrderTimeline({ order }: OrderTimelineProps) {
-  const steps = getStatusSteps(order.status)
+  const steps = getStatusSteps(order.order_status);
 
   return (
     <Card className="p-6">
@@ -34,8 +36,8 @@ export function OrderTimeline({ order }: OrderTimelineProps) {
                 <div
                   className={`w-1 h-12 mt-1 ${
                     step.completed
-                      ? 'bg-green-600 dark:bg-green-400'
-                      : 'bg-slate-300 dark:bg-slate-600'
+                      ? "bg-green-600 dark:bg-green-400"
+                      : "bg-slate-300 dark:bg-slate-600"
                   }`}
                 />
               )}
@@ -46,8 +48,8 @@ export function OrderTimeline({ order }: OrderTimelineProps) {
               <p
                 className={`font-semibold ${
                   step.completed
-                    ? 'text-slate-900 dark:text-white'
-                    : 'text-slate-500 dark:text-slate-400'
+                    ? "text-slate-900 dark:text-white"
+                    : "text-slate-500 dark:text-slate-400"
                 }`}
               >
                 {step.label}
@@ -66,5 +68,5 @@ export function OrderTimeline({ order }: OrderTimelineProps) {
         ))}
       </div>
     </Card>
-  )
+  );
 }

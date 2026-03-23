@@ -71,6 +71,59 @@ export interface ProductListParams {
   limit?: number;
 }
 
+export interface OrderListParams {
+  // category?: ProductFilterCategory;
+  total?: number;
+  bestSeller?: boolean;
+  newArrival?: boolean;
+  wishList?: boolean;
+  search?: string;
+
+  price_sort?: SortOrder;
+  arrival_sort?: SortOrder;
+
+  page?: number;
+  limit?: number;
+}
+
+
+export interface OrderItem {
+  id: string;
+  orderId: string;
+  productId: string;
+  productName: string;
+  productImage: string;
+  quantity: number;
+  unitPrice: number;
+  variant?: {
+    size?: string;
+    color?: string;
+    material?: string;
+  };
+  subtotal: number;
+}
+
+export interface Order {
+  id: string;
+  orderId: string;
+  userId: string;
+  orderDate: Date;
+  order_status: "placed" | "processing" | "shipped" | "delivered" | "cancelled";
+  total_amount: number;
+  subtotal: number;
+  tax: number;
+  shippingCost: number;
+  discount: number;
+  items: OrderItem[];
+  shippingAddress: String;
+  billingAddress: String;
+  paymentMethod: string;
+  trackingNumber?: string;
+  estimatedDeliveryDate?: Date;
+  created_at: Date;
+  updatedAt: Date;
+}
+
 export type FilterOptionKey = typeof filterOptions[number]["key"];
 
 export type CheckoutItem = {

@@ -1,24 +1,29 @@
-'use client'
+"use client";
 
-import Link from 'next/link'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { ArrowLeft, Printer } from 'lucide-react'
-import type { Order } from '@/lib/mock-orders'
-import { formatDate, getStatusColor, getStatusLabel, formatCurrency } from '@/lib/order-utils'
+import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft, Printer } from "lucide-react";
+import { Order } from "@/types";
+import { getStatusColor, getStatusLabel } from "@/helpers/order-utils";
+import { formatCurrency, formatDate } from "@/helpers/commonHelpers";
+
 
 interface OrderHeaderProps {
-  order: Order
+  order: Order;
 }
 
 export function OrderHeader({ order }: OrderHeaderProps) {
-  const statusColor = getStatusColor(order.status)
+  const statusColor = getStatusColor(order.order_status);
 
   return (
     <div className="space-y-4">
       {/* Back Button */}
       <Link href="/orders">
-        <Button variant="ghost" className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
+        <Button
+          variant="ghost"
+          className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+        >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Back to Orders
         </Button>
@@ -53,7 +58,7 @@ export function OrderHeader({ order }: OrderHeaderProps) {
               Status
             </p>
             <Badge className={`${statusColor.badge} text-xs`}>
-              {getStatusLabel(order.status)}
+              {getStatusLabel(order.order_status)}
             </Badge>
           </div>
 
@@ -63,7 +68,7 @@ export function OrderHeader({ order }: OrderHeaderProps) {
               Total Amount
             </p>
             <p className="text-xl font-bold text-amber-700 dark:text-amber-400">
-              {formatCurrency(order.totalAmount)}
+              {formatCurrency(order.total_amount)}
             </p>
           </div>
         </div>
@@ -79,5 +84,5 @@ export function OrderHeader({ order }: OrderHeaderProps) {
         </Button>
       </div>
     </div>
-  )
+  );
 }

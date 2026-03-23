@@ -1,9 +1,9 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
+import { useState } from "react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import {
   Pagination,
   PaginationContent,
@@ -11,37 +11,40 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from '@/components/ui/pagination'
-import { ChevronRight } from 'lucide-react'
-import type { Order } from '@/lib/mock-orders'
-import {
-  formatCurrency,
-  formatDateShort,
-  getStatusColor,
-  getStatusLabel,
-} from '@/lib/order-utils'
-import { cn } from '@/lib/utils'
-import { routes } from '@/lib/routes'
+} from "@/components/ui/pagination";
+import { ChevronRight } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { routes } from "@/lib/routes";
+import { Order } from "@/types";
+import { getStatusColor, getStatusLabel } from "@/helpers/order-utils";
+import { formatCurrency, formatDate } from "@/helpers/commonHelpers";
 
 interface OrderTableProps {
-  orders: Order[]
+  orders: Order[];
+  onPageChange: (page: number) => void;
+  pagination: {
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+  };
 }
 
-export function OrderTable({ orders }: OrderTableProps) {
-  const [currentPage, setCurrentPage] = useState(1)
-
-  // Dummy total pages
-  const totalPages = 5
-
+export function OrderTable({
+  orders,
+  pagination,
+  onPageChange,
+}: OrderTableProps) {
+  console.log(orders, "orders")
   return (
     <div className="space-y-4">
       <div className="overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-700">
         <table className="w-full">
           <thead>
             <tr className="border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50">
-              <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 dark:text-slate-300 uppercase tracking-wider">
+              {/* <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 dark:text-slate-300 uppercase tracking-wider">
                 Order ID
-              </th>
+              </th> */}
               <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 dark:text-slate-300 uppercase tracking-wider">
                 Date
               </th>
@@ -62,49 +65,49 @@ export function OrderTable({ orders }: OrderTableProps) {
 
           <tbody>
             {orders.map((order) => {
-              const statusColor = getStatusColor(order.status)
+              const statusColor = getStatusColor(order.order_status);
               const totalItems = order.items.reduce(
                 (sum, item) => sum + item.quantity,
-                0
-              )
+                0,
+              );
 
               return (
                 <tr
                   key={order.id}
                   className="border-b border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-900/30 transition-colors"
                 >
-                  <td className="px-6 py-4">
+                  {/* <td className="px-6 py-4">
                     <p className="font-semibold text-slate-900 dark:text-white">
                       {order.orderId}
                     </p>
-                  </td>
+                  </td> */}
 
                   <td className="px-6 py-4">
                     <p className="text-slate-700 dark:text-slate-300">
-                      {formatDateShort(order.orderDate)}
+                      {formatDate(order.created_at)}
                     </p>
                   </td>
 
                   <td className="px-6 py-4">
                     <p className="text-slate-700 dark:text-slate-300">
-                      {totalItems} item{totalItems !== 1 ? 's' : ''}
+                      {order.items.length} item{order.items.length !== 1 ? "s" : ""}
                     </p>
                   </td>
 
                   <td className="px-6 py-4 text-right">
                     <p className="font-semibold dark:text-amber-400">
-                      {formatCurrency(order.totalAmount)}
+                      {formatCurrency(order.total_amount)}
                     </p>
                   </td>
 
                   <td className="px-6 py-4">
                     <Badge className={cn(statusColor.badge)}>
-                      {getStatusLabel(order.status)}
+                      {getStatusLabel(order.order_status)}
                     </Badge>
                   </td>
 
                   <td className="px-6 py-4 text-center">
-                    <Link href={routes.orderView(order.orderId)}>
+                    <Link href={routes.orderView(order.id)}>
                       <Button
                         variant="ghost"
                         size="sm"
@@ -115,7 +118,7 @@ export function OrderTable({ orders }: OrderTableProps) {
                     </Link>
                   </td>
                 </tr>
-              )
+              );
             })}
           </tbody>
         </table>
@@ -124,41 +127,41 @@ export function OrderTable({ orders }: OrderTableProps) {
       {/* Pagination */}
       <Pagination>
         <PaginationContent>
-
           <PaginationItem>
             <PaginationPrevious
               onClick={() =>
-                setCurrentPage((p) => (p > 1 ? p - 1 : p))
+                onPageChange(pagination.page > 1 ? pagination.page - 1 : 1)
               }
             />
           </PaginationItem>
 
-          {[...Array(totalPages)].map((_, i) => {
-            const page = i + 1
+          {[...Array(pagination.totalPages)].map((_, i) => {
+            const page = i + 1;
             return (
               <PaginationItem key={page}>
                 <PaginationLink
-                  isActive={currentPage === page}
-                  onClick={() => setCurrentPage(page)}
+                  isActive={pagination.page === page}
+                  onClick={() => onPageChange(page)}
                 >
                   {page}
                 </PaginationLink>
               </PaginationItem>
-            )
+            );
           })}
 
           <PaginationItem>
             <PaginationNext
               onClick={() =>
-                setCurrentPage((p) =>
-                  p < totalPages ? p + 1 : p
+                onPageChange(
+                  pagination.page < pagination.totalPages
+                    ? pagination.page + 1
+                    : pagination.totalPages,
                 )
               }
             />
           </PaginationItem>
-
         </PaginationContent>
       </Pagination>
     </div>
-  )
+  );
 }

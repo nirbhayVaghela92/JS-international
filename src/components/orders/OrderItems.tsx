@@ -1,13 +1,14 @@
-'use client'
+"use client";
 
-import { Card } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Package } from 'lucide-react'
-import type { Order } from '@/lib/mock-orders'
-import { formatCurrency } from '@/lib/order-utils'
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Order } from "@/types";
+import { Package } from "lucide-react";
+import { formatCurrency } from "@/helpers/commonHelpers";
+
 
 interface OrderItemsProps {
-  items: Order['items']
+  items: Order["items"];
 }
 
 export function OrderItems({ items }: OrderItemsProps) {
@@ -96,5 +97,5 @@ export function OrderItems({ items }: OrderItemsProps) {
         ))}
       </div>
     </Card>
-  )
+  );
 }

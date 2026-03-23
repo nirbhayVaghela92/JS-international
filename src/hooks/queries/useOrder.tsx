@@ -1,6 +1,6 @@
-import { createOrder } from "@/services";
-import { CheckoutRequestType } from "@/types";
-import { useMutation } from "@tanstack/react-query";
+import { createOrder, getOrders } from "@/services";
+import { CheckoutRequestType, OrderListParams } from "@/types";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 export const useCreateOrder = () => {
   const response = useMutation({
@@ -11,4 +11,49 @@ export const useCreateOrder = () => {
     },
   });
   return response;
+};
+
+export const useOrderList = (params: OrderListParams) => {
+  const {
+    // category,
+    arrival_sort,
+    bestSeller,
+    price_sort,
+    limit,
+    page,
+    newArrival,
+    search,
+    wishList,
+  } = params;
+  const response = useQuery({
+    queryKey: [
+      "useOrderList",
+      // category,
+      arrival_sort,
+      bestSeller,
+      price_sort,
+      limit,
+      page,
+      newArrival,
+      search,
+      wishList,
+    ],
+    queryFn: async () => {
+      const res = await getOrders({
+        ...params,
+        ...(price_sort && { price_sort }),
+        ...(arrival_sort && { arrival_sort }),
+        ...(newArrival && { newArrival }),
+        ...(bestSeller && { bestSeller }),
+        ...(wishList && { wishList }),
+        ...(search && { search }),
+      });
+      return res;
+    },
+  });
+  return {
+    data: response.data?.data?.orders ?? [], 
+    isLoading: response.isLoading,
+    pagination: response.data?.data?.pagination,
+  };
 };

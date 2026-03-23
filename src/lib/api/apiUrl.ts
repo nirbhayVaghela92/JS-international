@@ -1,3 +1,4 @@
+import { getOrders } from "@/services";
 import { productDetails } from "@/services/product.service";
 
 export const API = {
@@ -16,6 +17,8 @@ export const API = {
 
   // create order
   createOrder: "/create-order",
+  listOrders: "/my-orders",
+
   // submit contact query
   submitContactQuery: "/submit-query",
 };

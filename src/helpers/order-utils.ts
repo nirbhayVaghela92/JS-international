@@ -1,21 +1,4 @@
-import type { Order } from "./mock-orders";
-
-export const formatCurrency = (amount: number): string => {
-  return new Intl.NumberFormat("en-IN", {
-    style: "currency",
-    currency: "INR",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(amount);
-};
-
-export const formatDate = (date: Date): string => {
-  return new Intl.DateTimeFormat("en-IN", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  }).format(new Date(date));
-};
+import { Order } from "@/types";
 
 export const formatDateShort = (date: Date): string => {
   return new Intl.DateTimeFormat("en-IN", {
@@ -26,25 +9,25 @@ export const formatDateShort = (date: Date): string => {
 };
 
 export const getStatusColor = (
-  status: Order["status"]
+  status: Order["order_status"],
 ): {
   bg: string;
   text: string;
   badge: string;
 } => {
   const colors: Record<
-    Order["status"],
+    Order["order_status"],
     { bg: string; text: string; badge: string }
   > = {
-    pending: {
-      bg: "bg-amber-50",
-      text: "text-amber-700",
-      badge: "bg-amber-100 text-amber-800",
-    },
-    processing: {
+    placed: {
       bg: "bg-blue-50",
       text: "text-blue-700",
       badge: "bg-blue-100 text-blue-800",
+    },
+    processing: {
+      bg: "bg-yellow-50",
+      text: "text-yellow-700",
+      badge: "bg-yellow-100 text-yellow-800",
     },
     shipped: {
       bg: "bg-indigo-50",
@@ -62,12 +45,13 @@ export const getStatusColor = (
       badge: "bg-red-100 text-red-800",
     },
   };
+
   return colors[status];
 };
 
-export const getStatusLabel = (status: Order["status"]): string => {
-  const labels: Record<Order["status"], string> = {
-    pending: "Pending",
+export const getStatusLabel = (status: Order["order_status"]): string => {
+  const labels: Record<Order["order_status"], string> = {
+    placed: "Placed",
     processing: "Processing",
     shipped: "Shipped",
     delivered: "Delivered",
@@ -75,12 +59,18 @@ export const getStatusLabel = (status: Order["status"]): string => {
   };
   return labels[status];
 };
-
 export const getStatusSteps = (
-  status: Order["status"]
+  status: Order["order_status"],
 ): Array<{ label: string; completed: boolean }> => {
+  if (status === "cancelled") {
+    return [{ label: "Cancelled", completed: true }];
+  }
+
   const steps: Array<{ label: string; completed: boolean }> = [
-    { label: "Order Placed", completed: true },
+    {
+      label: "Placed",
+      completed: true,
+    },
     {
       label: "Processing",
       completed: ["processing", "shipped", "delivered"].includes(status),
@@ -89,12 +79,11 @@ export const getStatusSteps = (
       label: "Shipped",
       completed: ["shipped", "delivered"].includes(status),
     },
-    { label: "Delivered", completed: status === "delivered" },
+    {
+      label: "Delivered",
+      completed: status === "delivered",
+    },
   ];
-
-  if (status === "cancelled") {
-    return [{ label: "Order Cancelled", completed: true }];
-  }
 
   return steps;
 };

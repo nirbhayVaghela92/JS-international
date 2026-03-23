@@ -1,13 +1,14 @@
-'use client'
+"use client";
 
-import { Card } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { CreditCard, Clock } from 'lucide-react'
-import type { Order } from '@/lib/mock-orders'
-import { formatDate } from '@/lib/order-utils'
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { CreditCard, Clock } from "lucide-react";
+import { Order } from "@/types";
+import { formatDate } from "@/helpers/commonHelpers";
+
 
 interface PaymentInfoProps {
-  order: Order
+  order: Order;
 }
 
 export function PaymentInfo({ order }: PaymentInfoProps) {
@@ -46,7 +47,7 @@ export function PaymentInfo({ order }: PaymentInfoProps) {
           </div>
           <div className="bg-slate-50 dark:bg-slate-900 rounded-lg p-4">
             <p className="text-slate-900 dark:text-white font-medium">
-              {formatDate(order.createdAt)}
+              {formatDate(order.created_at)}
             </p>
             <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
               Payment processed and confirmed
@@ -59,19 +60,20 @@ export function PaymentInfo({ order }: PaymentInfoProps) {
           <h3 className="font-semibold text-slate-900 dark:text-white mb-3">
             Billing Address
           </h3>
-          <div className="bg-slate-50 dark:bg-slate-900 rounded-lg p-4 space-y-1 text-slate-700 dark:text-slate-300 text-sm">
+          N/A
+          {/* <div className="bg-slate-50 dark:bg-slate-900 rounded-lg p-4 space-y-1 text-slate-700 dark:text-slate-300 text-sm">
             <p className="font-medium text-slate-900 dark:text-white">
               {order.billingAddress.firstName} {order.billingAddress.lastName}
             </p>
             <p>{order.billingAddress.street}</p>
             <p>
-              {order.billingAddress.city}, {order.billingAddress.state}{' '}
+              {order.billingAddress.city}, {order.billingAddress.state}{" "}
               {order.billingAddress.postalCode}
             </p>
             <p>{order.billingAddress.country}</p>
-          </div>
+          </div> */}
         </div>
       </div>
     </Card>
-  )
+  );
 }

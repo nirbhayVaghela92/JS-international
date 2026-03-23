@@ -1,6 +1,5 @@
 "use client";
 
-import { getMockOrderById } from "@/lib/mock-orders";
 import { OrderHeader } from "@/components/orders/OrderHeader";
 import { OrderItems } from "@/components/orders/OrderItems";
 import { OrderSummary } from "@/components/orders/OrderSummary";
@@ -16,7 +15,8 @@ import { useParams } from "next/navigation";
 export default function OrderDetailPage() {
   const params = useParams();
   console.log(params, "params");
-  const order = getMockOrderById(String(params.orderId));
+  const order = null; // Replace with actual data fetching logic using params.orderId
+
 
   if (!order) {
     return (

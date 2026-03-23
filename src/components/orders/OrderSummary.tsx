@@ -1,11 +1,12 @@
-'use client'
+"use client";
 
-import { Card } from '@/components/ui/card'
-import type { Order } from '@/lib/mock-orders'
-import { formatCurrency } from '@/lib/order-utils'
+import { Card } from "@/components/ui/card";
+import { formatCurrency } from "@/helpers/commonHelpers";
+import { Order } from "@/types";
+
 
 interface OrderSummaryProps {
-  order: Order
+  order: Order;
 }
 
 export function OrderSummary({ order }: OrderSummaryProps) {
@@ -36,7 +37,9 @@ export function OrderSummary({ order }: OrderSummaryProps) {
         <div className="flex justify-between items-center">
           <span className="text-slate-600 dark:text-slate-400">Shipping</span>
           <span className="text-slate-900 dark:text-white font-medium">
-            {order.shippingCost === 0 ? 'Free' : formatCurrency(order.shippingCost)}
+            {order.shippingCost === 0
+              ? "Free"
+              : formatCurrency(order.shippingCost)}
           </span>
         </div>
 
@@ -44,7 +47,9 @@ export function OrderSummary({ order }: OrderSummaryProps) {
         {order.discount > 0 && (
           <div className="flex justify-between items-center text-green-700 dark:text-green-400">
             <span>Discount</span>
-            <span className="font-medium">-{formatCurrency(order.discount)}</span>
+            <span className="font-medium">
+              -{formatCurrency(order.discount)}
+            </span>
           </div>
         )}
 
@@ -54,10 +59,10 @@ export function OrderSummary({ order }: OrderSummaryProps) {
             Total
           </span>
           <span className="text-2xl font-bold text-amber-700 dark:text-amber-400">
-            {formatCurrency(order.totalAmount)}
+            {formatCurrency(order.total_amount)}
           </span>
         </div>
       </div>
     </Card>
-  )
+  );
 }

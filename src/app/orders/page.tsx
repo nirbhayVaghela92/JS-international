@@ -1,62 +1,50 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { getMockOrders } from "@/lib/mock-orders";
+import { useState, useEffect } from "react";
 import { OrderFilters } from "@/components/orders/OrderFilters";
 import { OrderCard } from "@/components/orders/OrderCard";
 import { OrderTable } from "@/components/orders/OrderTable";
-// import { Empty } from "@/components/ui/empty";
 import { Package } from "lucide-react";
+import { useOrderList } from "@/hooks/queries/useOrder";
+import { OrderListParams } from "@/types";
+import { Loader } from "@/components/common/Loader";
 
 export default function OrdersPage() {
-  const allOrders = getMockOrders();
-  const [filters, setFilters] = useState({
-    search: "",
-    status: "all",
-    sortBy: "recent",
+  const [filter, setFilter] = useState<OrderListParams>({
+    // category: undefined,
+    arrival_sort: undefined,
+    bestSeller: false,
+    price_sort: undefined,
+    limit: 12,
+    page: 1,
+    newArrival: false,
+    search: undefined,
+    wishList: false,
   });
+  const { data: ordersList, pagination, isLoading } = useOrderList(filter);
+  
+  useEffect(() => {
+  const newValues = {
+    total: pagination?.total,
+    page: pagination?.page || 1,
+    limit: pagination?.limit ? pagination.limit * 12 : 12,
+  };
 
-  const filteredAndSortedOrders = useMemo(() => {
-    let result = [...allOrders];
+  // setFilter((prev) => {
+  //   if (
+  //     prev.total === newValues.total &&
+  //     prev.page === newValues.page &&
+  //     prev.limit === newValues.limit
+  //   ) {
+  //     return prev; 
+  //   }
 
-    // Search filter
-    if (filters.search) {
-      const searchLower = filters.search.toLowerCase();
-      result = result.filter(
-        (order) =>
-          order.orderId.toLowerCase().includes(searchLower) ||
-          order.items.some((item) =>
-            item.productName.toLowerCase().includes(searchLower),
-          ),
-      );
-    }
-
-    // Status filter
-    if (filters.status !== "all") {
-      result = result.filter((order) => order.status === filters.status);
-    }
-
-    // Sorting
-    if (filters.sortBy === "recent") {
-      result.sort(
-        (a, b) =>
-          new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime(),
-      );
-    } else if (filters.sortBy === "oldest") {
-      result.sort(
-        (a, b) =>
-          new Date(a.orderDate).getTime() - new Date(b.orderDate).getTime(),
-      );
-    } else if (filters.sortBy === "amount-high") {
-      result.sort((a, b) => b.totalAmount - a.totalAmount);
-    } else if (filters.sortBy === "amount-low") {
-      result.sort((a, b) => a.totalAmount - b.totalAmount);
-    }
-
-    return result;
-  }, [filters]);
-
-  console.log(filteredAndSortedOrders, "filteredAndSortedOrders");
+  //   return {
+  //     ...prev,
+  //     ...newValues,
+  //   };
+  // });
+}, [isLoading]);
 
   return (
     <main className="pt-5">
@@ -74,7 +62,7 @@ export default function OrdersPage() {
             </div>
 
             {/* Filters */}
-            <OrderFilters onFilterChange={setFilters} />
+            <OrderFilters onFilterChange={setFilter} />
 
             {/* Results Count */}
             {/* {filteredAndSortedOrders.length > 0 && (
@@ -85,7 +73,9 @@ export default function OrdersPage() {
             )} */}
 
             {/* Orders Display */}
-            {filteredAndSortedOrders.length === 0 ? (
+            {isLoading ? (
+              <Loader />
+            ) : ordersList.length === 0 ? (
               // <Empty
               //   icon={Package}
               //   title="No orders found"
@@ -104,14 +94,25 @@ export default function OrdersPage() {
               <>
                 {/* Mobile/Tablet View - Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:hidden">
-                  {filteredAndSortedOrders.map((order) => (
+                  {ordersList.map((order) => (
                     <OrderCard key={order.id} order={order} />
                   ))}
                 </div>
 
                 {/* Desktop View - Table */}
                 <div className="hidden md:block">
-                  <OrderTable orders={filteredAndSortedOrders} />
+                  <OrderTable
+                    orders={ordersList}
+                    pagination={{
+                      limit: pagination.total,
+                      page: pagination.page,
+                      total: pagination.total,
+                      totalPages: pagination.total_pages,
+                    }}
+                    onPageChange={(newPage) =>
+                      setFilter((prev) => ({ ...prev, page: newPage }))
+                    }
+                  />
                 </div>
               </>
             )}
