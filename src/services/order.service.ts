@@ -19,3 +19,11 @@ export const getOrders = (params: OrderListParams) => {
     data: params,
   });
 };
+
+export const getOrderDetails = (orderId: String) => {
+  return apiRequest({
+    method: "get",
+    url: API.orderDetails(orderId),
+    // data: params,
+  });
+};

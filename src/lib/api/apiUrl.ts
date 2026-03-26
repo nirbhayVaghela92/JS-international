@@ -18,6 +18,7 @@ export const API = {
   // create order
   createOrder: "/create-order",
   listOrders: "/my-orders",
+  orderDetails: (orderId: String) => `/orders/${orderId}`, 
 
   // submit contact query
   submitContactQuery: "/submit-query",

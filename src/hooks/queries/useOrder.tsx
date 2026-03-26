@@ -1,4 +1,5 @@
-import { createOrder, getOrders } from "@/services";
+import OrderDetailPage from "@/app/orders/[orderId]/page";
+import { createOrder, getOrderDetails, getOrders } from "@/services";
 import { CheckoutRequestType, OrderListParams } from "@/types";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
@@ -55,5 +56,19 @@ export const useOrderList = (params: OrderListParams) => {
     data: response.data?.data?.orders ?? [], 
     isLoading: response.isLoading,
     pagination: response.data?.data?.pagination,
+  };
+};
+
+export const useOrderDetails = (orderId: String) => {
+  const response = useQuery({
+    queryKey: ["useOrderDetails", orderId],
+    queryFn: async () => {
+      const res = await getOrderDetails(orderId);
+      return res;
+    },
+  });
+  return {
+    data: response.data?.data,
+    isLoading: response.isLoading,
   };
 };

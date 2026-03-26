@@ -107,7 +107,7 @@ export function OrderTable({
                   </td>
 
                   <td className="px-6 py-4 text-center">
-                    <Link href={routes.orderView(order.id)}>
+                    <Link href={routes.orderView(order.uuid)}>
                       <Button
                         variant="ghost"
                         size="sm"

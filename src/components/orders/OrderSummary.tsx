@@ -21,7 +21,7 @@ export function OrderSummary({ order }: OrderSummaryProps) {
         <div className="flex justify-between items-center">
           <span className="text-slate-600 dark:text-slate-400">Subtotal</span>
           <span className="text-slate-900 dark:text-white font-medium">
-            {formatCurrency(order.subtotal)}
+            {formatCurrency(order.total_amount)}
           </span>
         </div>
 
@@ -29,7 +29,7 @@ export function OrderSummary({ order }: OrderSummaryProps) {
         <div className="flex justify-between items-center">
           <span className="text-slate-600 dark:text-slate-400">Tax (GST)</span>
           <span className="text-slate-900 dark:text-white font-medium">
-            {formatCurrency(order.tax)}
+            {order.tax ? formatCurrency(order.tax) : "N/A"}
           </span>
         </div>
 
@@ -39,7 +39,7 @@ export function OrderSummary({ order }: OrderSummaryProps) {
           <span className="text-slate-900 dark:text-white font-medium">
             {order.shippingCost === 0
               ? "Free"
-              : formatCurrency(order.shippingCost)}
+              : order.shippingCost ? formatCurrency(order.shippingCost): "N/A"}
           </span>
         </div>
 

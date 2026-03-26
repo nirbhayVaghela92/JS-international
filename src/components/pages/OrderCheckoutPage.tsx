@@ -347,7 +347,7 @@ export default function CheckoutPage({}: CheckoutPageProps) {
                   <Button
                     onClick={handlePlaceOrder}
                     disabled={!isFormValid}
-                    className="w-full h-12 bg-primary hover:bg-primary/90 text-white font-semibold text-base"
+                    className="w-full h-12 bg-primary hover:bg-primary/90 text-white font-semibold text-base cursor-pointer"
                   >
                     PLACE ORDER
                   </Button>

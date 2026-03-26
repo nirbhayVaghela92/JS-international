@@ -38,7 +38,7 @@ export function OrderHeader({ order }: OrderHeaderProps) {
               Order Number
             </p>
             <p className="text-xl font-bold text-slate-900 dark:text-white">
-              {order.orderId}
+              {order.uuid}
             </p>
           </div>
 
@@ -48,7 +48,7 @@ export function OrderHeader({ order }: OrderHeaderProps) {
               Order Date
             </p>
             <p className="text-lg font-semibold text-slate-900 dark:text-white">
-              {formatDate(order.orderDate)}
+              {formatDate(order.created_at)}
             </p>
           </div>
 

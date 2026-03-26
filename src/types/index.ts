@@ -89,9 +89,11 @@ export interface OrderListParams {
 
 export interface OrderItem {
   id: string;
+  price?: number;
   orderId: string;
   productId: string;
-  productName: string;
+  product_name: string;
+  category_name: string;
   productImage: string;
   quantity: number;
   unitPrice: number;
@@ -105,6 +107,7 @@ export interface OrderItem {
 
 export interface Order {
   id: string;
+  uuid: number;
   orderId: string;
   userId: string;
   orderDate: Date;

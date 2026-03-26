@@ -10,7 +10,7 @@ interface ShippingInfoProps {
 }
 
 export function ShippingInfo({ order }: ShippingInfoProps) {
-  const address = order.shippingAddress
+  const address = order.shippingAddress ?? "-"
   const parsedAddress =
     typeof address === 'string'
       ? (() => {

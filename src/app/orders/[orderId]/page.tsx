@@ -11,12 +11,19 @@ import { Button } from "@/components/ui/button";
 import { AlertCircle } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { useOrderDetails } from "@/hooks/queries/useOrder";
+import { Loader } from "@/components/common/Loader";
 
 export default function OrderDetailPage() {
   const params = useParams();
-  console.log(params, "params");
-  const order = null; // Replace with actual data fetching logic using params.orderId
+  
+  const { data: orderData, isLoading } = useOrderDetails(
+    String(params.orderId),
+  );
 
+  const order = orderData?.order;
+
+  console.log(order, "orderData");
 
   if (!order) {
     return (
@@ -40,6 +47,10 @@ export default function OrderDetailPage() {
     );
   }
 
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
     <main className="pt-7">
       <section className=" pb-10 px-10 cus-container">
@@ -59,7 +70,7 @@ export default function OrderDetailPage() {
             {/* Right Column - Shipping, Payment, Actions */}
             <div className="space-y-6">
               <ShippingInfo order={order} />
-              <PaymentInfo order={order} />
+              {/* <PaymentInfo order={order} /> */}
               <OrderActions order={order} />
             </div>
           </div>

@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Order } from "@/types";
 import { Package } from "lucide-react";
 import { formatCurrency } from "@/helpers/commonHelpers";
-
+import { cn } from "@/lib/utils";
 
 interface OrderItemsProps {
   items: Order["items"];
@@ -36,32 +36,25 @@ export function OrderItems({ items }: OrderItemsProps) {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <p className="font-semibold text-slate-900 dark:text-white mb-1">
-                    {item.productName}
+                    {item.product_name}
                   </p>
                   <p className="text-sm text-slate-600 dark:text-slate-400 mb-2">
-                    SKU: {item.productId}
+                    ({item.category_name ?? "N/A"})
                   </p>
 
-                  {/* Variants */}
-                  {item.variant && (
-                    <div className="flex flex-wrap gap-2">
-                      {item.variant.size && (
-                        <Badge variant="secondary" className="text-xs">
-                          Size: {item.variant.size}
-                        </Badge>
-                      )}
-                      {item.variant.color && (
-                        <Badge variant="secondary" className="text-xs">
-                          {item.variant.color}
-                        </Badge>
-                      )}
-                      {item.variant.material && (
-                        <Badge variant="secondary" className="text-xs">
-                          {item.variant.material}
-                        </Badge>
-                      )}
-                    </div>
-                  )}
+                  <div
+                    className={cn(
+                      "relative w-6 h-6 rounded-full flex items-center justify-center",
+                    )}
+                  >
+                    <span className="absolute inset-0 rounded-full ring-1 ring-black" />
+
+                    <span
+                      className="w-5 h-5 rounded-full border"
+                      style={{ backgroundColor: "#FF0000" }}
+                      // title="#FF0000"
+                    />
+                  </div>
                 </div>
 
                 {/* Pricing */}
@@ -71,7 +64,7 @@ export function OrderItems({ items }: OrderItemsProps) {
                       Unit Price:
                     </span>
                     <span className="font-semibold text-slate-900 dark:text-white">
-                      {formatCurrency(item.unitPrice)}
+                      {formatCurrency(item.price)}
                     </span>
                   </div>
                   <div className="flex justify-between items-center">
@@ -87,7 +80,7 @@ export function OrderItems({ items }: OrderItemsProps) {
                       Subtotal:
                     </span>
                     <span className="font-bold text-amber-700 dark:text-amber-400">
-                      {formatCurrency(item.subtotal)}
+                      {formatCurrency(item.quantity * item.price)}
                     </span>
                   </div>
                 </div>

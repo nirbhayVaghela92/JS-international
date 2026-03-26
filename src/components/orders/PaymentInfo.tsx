@@ -18,16 +18,16 @@ export function PaymentInfo({ order }: PaymentInfoProps) {
         Payment Information
       </h2>
 
-      <div className="space-y-4">
+      <div className="space-y-7">
         {/* Payment Method */}
         <div>
-          <div className="flex items-center gap-2 mb-3">
+          <div className="flex items-center gap-2">
             <CreditCard className="w-5 h-5 text-amber-600 dark:text-amber-400" />
             <h3 className="font-semibold text-slate-900 dark:text-white">
               Payment Method
             </h3>
           </div>
-          <div className="bg-slate-50 dark:bg-slate-900 rounded-lg p-4">
+          <div className="bg-slate-50 dark:bg-slate-900 rounded-lg">
             <p className="text-slate-900 dark:text-white font-medium">
               {order.paymentMethod}
             </p>
@@ -45,7 +45,7 @@ export function PaymentInfo({ order }: PaymentInfoProps) {
               Payment Date
             </h3>
           </div>
-          <div className="bg-slate-50 dark:bg-slate-900 rounded-lg p-4">
+          <div className="bg-slate-50 dark:bg-slate-900 rounded-lg">
             <p className="text-slate-900 dark:text-white font-medium">
               {formatDate(order.created_at)}
             </p>
